@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>data-card</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="data-card_files/libs/clipboard/clipboard.min.js"></script>
+<script src="data-card_files/libs/quarto-html/quarto.js"></script>
+<script src="data-card_files/libs/quarto-html/popper.min.js"></script>
+<script src="data-card_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="data-card_files/libs/quarto-html/anchor.min.js"></script>
+<link href="data-card_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="data-card_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="data-card_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="data-card_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="data-card_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="cell-0" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#installing openml package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!pip install openml</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-1" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#numpy version should be less than 2 for openml to work</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>np.__version__</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>'1.26.4'</code></pre>
+</div>
+</div>
+<div id="cell-2" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openml</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List all datasets and their properties</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>openml.datasets.list_datasets(output_format<span class="op">=</span><span class="st">"dataframe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">did</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">version</th>
+<th data-quarto-table-cell-role="th">uploader</th>
+<th data-quarto-table-cell-role="th">status</th>
+<th data-quarto-table-cell-role="th">format</th>
+<th data-quarto-table-cell-role="th">MajorityClassSize</th>
+<th data-quarto-table-cell-role="th">MaxNominalAttDistinctValues</th>
+<th data-quarto-table-cell-role="th">MinorityClassSize</th>
+<th data-quarto-table-cell-role="th">NumberOfClasses</th>
+<th data-quarto-table-cell-role="th">NumberOfFeatures</th>
+<th data-quarto-table-cell-role="th">NumberOfInstances</th>
+<th data-quarto-table-cell-role="th">NumberOfInstancesWithMissingValues</th>
+<th data-quarto-table-cell-role="th">NumberOfMissingValues</th>
+<th data-quarto-table-cell-role="th">NumberOfNumericFeatures</th>
+<th data-quarto-table-cell-role="th">NumberOfSymbolicFeatures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>anneal</td>
+<td>1</td>
+<td>1</td>
+<td>active</td>
+<td>ARFF</td>
+<td>684.0</td>
+<td>7.0</td>
+<td>8.0</td>
+<td>5.0</td>
+<td>39.0</td>
+<td>898.0</td>
+<td>898.0</td>
+<td>22175.0</td>
+<td>6.0</td>
+<td>33.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>kr-vs-kp</td>
+<td>1</td>
+<td>1</td>
+<td>active</td>
+<td>ARFF</td>
+<td>1669.0</td>
+<td>3.0</td>
+<td>1527.0</td>
+<td>2.0</td>
+<td>37.0</td>
+<td>3196.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>37.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>labor</td>
+<td>1</td>
+<td>1</td>
+<td>active</td>
+<td>ARFF</td>
+<td>37.0</td>
+<td>3.0</td>
+<td>20.0</td>
+<td>2.0</td>
+<td>17.0</td>
+<td>57.0</td>
+<td>56.0</td>
+<td>326.0</td>
+<td>8.0</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>5</td>
+<td>arrhythmia</td>
+<td>1</td>
+<td>1</td>
+<td>active</td>
+<td>ARFF</td>
+<td>245.0</td>
+<td>13.0</td>
+<td>2.0</td>
+<td>13.0</td>
+<td>280.0</td>
+<td>452.0</td>
+<td>384.0</td>
+<td>408.0</td>
+<td>206.0</td>
+<td>74.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>6</td>
+<td>letter</td>
+<td>1</td>
+<td>1</td>
+<td>active</td>
+<td>ARFF</td>
+<td>813.0</td>
+<td>26.0</td>
+<td>734.0</td>
+<td>26.0</td>
+<td>17.0</td>
+<td>20000.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>16.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">46332</td>
+<td>46332</td>
+<td>anneal_clean</td>
+<td>1</td>
+<td>30703</td>
+<td>active</td>
+<td>arff</td>
+<td>684.0</td>
+<td>NaN</td>
+<td>8.0</td>
+<td>5.0</td>
+<td>39.0</td>
+<td>898.0</td>
+<td>898.0</td>
+<td>22175.0</td>
+<td>6.0</td>
+<td>33.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">46333</td>
+<td>46333</td>
+<td>arrhythmia</td>
+<td>3</td>
+<td>30703</td>
+<td>active</td>
+<td>arff</td>
+<td>245.0</td>
+<td>NaN</td>
+<td>2.0</td>
+<td>13.0</td>
+<td>280.0</td>
+<td>452.0</td>
+<td>384.0</td>
+<td>408.0</td>
+<td>206.0</td>
+<td>74.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">46334</td>
+<td>46334</td>
+<td>glass_clean</td>
+<td>1</td>
+<td>30703</td>
+<td>active</td>
+<td>arff</td>
+<td>76.0</td>
+<td>NaN</td>
+<td>9.0</td>
+<td>6.0</td>
+<td>10.0</td>
+<td>214.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>9.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">46335</td>
+<td>46335</td>
+<td>primary-tumor_clean</td>
+<td>1</td>
+<td>30703</td>
+<td>active</td>
+<td>arff</td>
+<td>84.0</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>21.0</td>
+<td>18.0</td>
+<td>339.0</td>
+<td>207.0</td>
+<td>225.0</td>
+<td>0.0</td>
+<td>18.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">46336</td>
+<td>46336</td>
+<td>hayes-roth_clean</td>
+<td>1</td>
+<td>30703</td>
+<td>active</td>
+<td>arff</td>
+<td>65.0</td>
+<td>NaN</td>
+<td>31.0</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>160.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>4.0</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>5751 rows × 16 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-3" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get dataset by ID</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> openml.datasets.get_dataset(<span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\Admin\AppData\Local\Temp\ipykernel_16228\1434261051.py:2: FutureWarning: Starting from Version 0.15 `download_data`, `download_qualities`, and `download_features_meta_data` will all be ``False`` instead of ``True`` by default to enable lazy loading. To disable this message until version 0.15 explicitly set `download_data`, `download_qualities`, and `download_features_meta_data` to a bool while calling `get_dataset`.
+  dataset = openml.datasets.get_dataset(42)</code></pre>
+</div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get dataset by name</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#dataset = openml.datasets.get_dataset('soybean')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-5" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the data itself as a dataframe (or otherwise)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X, y, _, _ <span class="op">=</span> dataset.get_data(dataset_format<span class="op">=</span><span class="st">"dataframe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">plant-stand</th>
+<th data-quarto-table-cell-role="th">precip</th>
+<th data-quarto-table-cell-role="th">temp</th>
+<th data-quarto-table-cell-role="th">hail</th>
+<th data-quarto-table-cell-role="th">crop-hist</th>
+<th data-quarto-table-cell-role="th">area-damaged</th>
+<th data-quarto-table-cell-role="th">severity</th>
+<th data-quarto-table-cell-role="th">seed-tmt</th>
+<th data-quarto-table-cell-role="th">germination</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">sclerotia</th>
+<th data-quarto-table-cell-role="th">fruit-pods</th>
+<th data-quarto-table-cell-role="th">fruit-spots</th>
+<th data-quarto-table-cell-role="th">seed</th>
+<th data-quarto-table-cell-role="th">mold-growth</th>
+<th data-quarto-table-cell-role="th">seed-discolor</th>
+<th data-quarto-table-cell-role="th">seed-size</th>
+<th data-quarto-table-cell-role="th">shriveling</th>
+<th data-quarto-table-cell-role="th">roots</th>
+<th data-quarto-table-cell-role="th">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>october</td>
+<td>normal</td>
+<td>gt-norm</td>
+<td>norm</td>
+<td>yes</td>
+<td>same-lst-yr</td>
+<td>low-areas</td>
+<td>pot-severe</td>
+<td>none</td>
+<td>90-100</td>
+<td>...</td>
+<td>absent</td>
+<td>norm</td>
+<td>dna</td>
+<td>norm</td>
+<td>absent</td>
+<td>absent</td>
+<td>norm</td>
+<td>absent</td>
+<td>norm</td>
+<td>diaporthe-stem-canker</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>august</td>
+<td>normal</td>
+<td>gt-norm</td>
+<td>norm</td>
+<td>yes</td>
+<td>same-lst-two-yrs</td>
+<td>scattered</td>
+<td>severe</td>
+<td>fungicide</td>
+<td>80-89</td>
+<td>...</td>
+<td>absent</td>
+<td>norm</td>
+<td>dna</td>
+<td>norm</td>
+<td>absent</td>
+<td>absent</td>
+<td>norm</td>
+<td>absent</td>
+<td>norm</td>
+<td>diaporthe-stem-canker</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>july</td>
+<td>normal</td>
+<td>gt-norm</td>
+<td>norm</td>
+<td>yes</td>
+<td>same-lst-yr</td>
+<td>scattered</td>
+<td>severe</td>
+<td>fungicide</td>
+<td>lt-80</td>
+<td>...</td>
+<td>absent</td>
+<td>norm</td>
+<td>dna</td>
+<td>norm</td>
+<td>absent</td>
+<td>absent</td>
+<td>norm</td>
+<td>absent</td>
+<td>norm</td>
+<td>diaporthe-stem-canker</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>july</td>
+<td>normal</td>
+<td>gt-norm</td>
+<td>norm</td>
+<td>yes</td>
+<td>same-lst-yr</td>
+<td>scattered</td>
+<td>severe</td>
+<td>none</td>
+<td>80-89</td>
+<td>...</td>
+<td>absent</td>
+<td>norm</td>
+<td>dna</td>
+<td>norm</td>
+<td>absent</td>
+<td>absent</td>
+<td>norm</td>
+<td>absent</td>
+<td>norm</td>
+<td>diaporthe-stem-canker</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>october</td>
+<td>normal</td>
+<td>gt-norm</td>
+<td>norm</td>
+<td>yes</td>
+<td>same-lst-two-yrs</td>
+<td>scattered</td>
+<td>pot-severe</td>
+<td>none</td>
+<td>lt-80</td>
+<td>...</td>
+<td>absent</td>
+<td>norm</td>
+<td>dna</td>
+<td>norm</td>
+<td>absent</td>
+<td>absent</td>
+<td>norm</td>
+<td>absent</td>
+<td>norm</td>
+<td>diaporthe-stem-canker</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 36 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>(683, 36)</code></pre>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>X.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>Index(['date', 'plant-stand', 'precip', 'temp', 'hail', 'crop-hist',
+       'area-damaged', 'severity', 'seed-tmt', 'germination', 'plant-growth',
+       'leaves', 'leafspots-halo', 'leafspots-marg', 'leafspot-size',
+       'leaf-shread', 'leaf-malf', 'leaf-mild', 'stem', 'lodging',
+       'stem-cankers', 'canker-lesion', 'fruiting-bodies', 'external-decay',
+       'mycelium', 'int-discolor', 'sclerotia', 'fruit-pods', 'fruit-spots',
+       'seed', 'mold-growth', 'seed-discolor', 'seed-size', 'shriveling',
+       'roots', 'class'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 683 entries, 0 to 682
+Data columns (total 36 columns):
+ #   Column           Non-Null Count  Dtype   
+---  ------           --------------  -----   
+ 0   date             682 non-null    category
+ 1   plant-stand      647 non-null    category
+ 2   precip           645 non-null    category
+ 3   temp             653 non-null    category
+ 4   hail             562 non-null    category
+ 5   crop-hist        667 non-null    category
+ 6   area-damaged     682 non-null    category
+ 7   severity         562 non-null    category
+ 8   seed-tmt         562 non-null    category
+ 9   germination      571 non-null    category
+ 10  plant-growth     667 non-null    category
+ 11  leaves           683 non-null    category
+ 12  leafspots-halo   599 non-null    category
+ 13  leafspots-marg   599 non-null    category
+ 14  leafspot-size    599 non-null    category
+ 15  leaf-shread      583 non-null    category
+ 16  leaf-malf        599 non-null    category
+ 17  leaf-mild        575 non-null    category
+ 18  stem             667 non-null    category
+ 19  lodging          562 non-null    category
+ 20  stem-cankers     645 non-null    category
+ 21  canker-lesion    645 non-null    category
+ 22  fruiting-bodies  577 non-null    category
+ 23  external-decay   645 non-null    category
+ 24  mycelium         645 non-null    category
+ 25  int-discolor     645 non-null    category
+ 26  sclerotia        645 non-null    category
+ 27  fruit-pods       599 non-null    category
+ 28  fruit-spots      577 non-null    category
+ 29  seed             591 non-null    category
+ 30  mold-growth      591 non-null    category
+ 31  seed-discolor    577 non-null    category
+ 32  seed-size        591 non-null    category
+ 33  shriveling       577 non-null    category
+ 34  roots            652 non-null    category
+ 35  class            683 non-null    category
+dtypes: category(36)
+memory usage: 29.9 KB</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>pandas.core.frame.DataFrame</code></pre>
+</div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>column_list <span class="op">=</span> [<span class="st">'date'</span>, <span class="st">'plant-stand'</span>, <span class="st">'precip'</span>, <span class="st">'temp'</span>, <span class="st">'hail'</span>, <span class="st">'crop-hist'</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="st">'area-damaged'</span>, <span class="st">'severity'</span>, <span class="st">'seed-tmt'</span>, <span class="st">'germination'</span>, <span class="st">'plant-growth'</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'leaves'</span>, <span class="st">'leafspots-halo'</span>, <span class="st">'leafspots-marg'</span>, <span class="st">'leafspot-size'</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">'leaf-shread'</span>, <span class="st">'leaf-malf'</span>, <span class="st">'leaf-mild'</span>, <span class="st">'stem'</span>, <span class="st">'lodging'</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>       <span class="st">'stem-cankers'</span>, <span class="st">'canker-lesion'</span>, <span class="st">'fruiting-bodies'</span>, <span class="st">'external-decay'</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>       <span class="st">'mycelium'</span>, <span class="st">'int-discolor'</span>, <span class="st">'sclerotia'</span>, <span class="st">'fruit-pods'</span>, <span class="st">'fruit-spots'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>       <span class="st">'seed'</span>, <span class="st">'mold-growth'</span>, <span class="st">'seed-discolor'</span>, <span class="st">'seed-size'</span>, <span class="st">'shriveling'</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>       <span class="st">'roots'</span>, <span class="st">'class'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-12" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>X.dropna(subset<span class="op">=</span>column_list, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-13" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 562 entries, 0 to 646
+Data columns (total 36 columns):
+ #   Column           Non-Null Count  Dtype   
+---  ------           --------------  -----   
+ 0   date             562 non-null    category
+ 1   plant-stand      562 non-null    category
+ 2   precip           562 non-null    category
+ 3   temp             562 non-null    category
+ 4   hail             562 non-null    category
+ 5   crop-hist        562 non-null    category
+ 6   area-damaged     562 non-null    category
+ 7   severity         562 non-null    category
+ 8   seed-tmt         562 non-null    category
+ 9   germination      562 non-null    category
+ 10  plant-growth     562 non-null    category
+ 11  leaves           562 non-null    category
+ 12  leafspots-halo   562 non-null    category
+ 13  leafspots-marg   562 non-null    category
+ 14  leafspot-size    562 non-null    category
+ 15  leaf-shread      562 non-null    category
+ 16  leaf-malf        562 non-null    category
+ 17  leaf-mild        562 non-null    category
+ 18  stem             562 non-null    category
+ 19  lodging          562 non-null    category
+ 20  stem-cankers     562 non-null    category
+ 21  canker-lesion    562 non-null    category
+ 22  fruiting-bodies  562 non-null    category
+ 23  external-decay   562 non-null    category
+ 24  mycelium         562 non-null    category
+ 25  int-discolor     562 non-null    category
+ 26  sclerotia        562 non-null    category
+ 27  fruit-pods       562 non-null    category
+ 28  fruit-spots      562 non-null    category
+ 29  seed             562 non-null    category
+ 30  mold-growth      562 non-null    category
+ 31  seed-discolor    562 non-null    category
+ 32  seed-size        562 non-null    category
+ 33  shriveling       562 non-null    category
+ 34  roots            562 non-null    category
+ 35  class            562 non-null    category
+dtypes: category(36)
+memory usage: 29.9 KB</code></pre>
+</div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<pre><code>(562, 36)</code></pre>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pymfe.mfe <span class="im">import</span> MFE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creates features </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> X.drop([<span class="st">'class'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#creates labels</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X[<span class="st">'class'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x.shape, y.shape, <span class="bu">type</span>(x), <span class="bu">type</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<pre><code>((562, 35), (562,), pandas.core.frame.DataFrame, pandas.core.series.Series)</code></pre>
+</div>
+</div>
+<div id="cell-18" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.to_numpy()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-19" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(x), <span class="bu">type</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>(numpy.ndarray, numpy.ndarray)</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mfe <span class="op">=</span> MFE()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>mfe.fit(x, y)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ft <span class="op">=</span> mfe.extract()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:1281: UserWarning:  * Something went wrong while precomputing 'precompute_can_cors'. Will ignore this method. Error message:
+TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'can_cor'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+ Will set it as 'np.nan' for all summary functions.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'sd'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'mean'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'lh_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'nr_disc'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'p_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'roy_root'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1267: RuntimeWarning: divide by zero encountered in log
+  np.log(np.linalg.det(S_i)) for S_i in sample_cov_matrices
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1272: RuntimeWarning: divide by zero encountered in log
+  * np.log(np.linalg.det(pooled_cov_mat))
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1271: RuntimeWarning: invalid value encountered in scalar subtract
+  (num_inst - num_classes)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'w_lambda'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(</code></pre>
+</div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(['attr_conc.mean', 'attr_conc.sd', 'attr_ent.mean', 'attr_ent.sd', 'attr_to_inst', 'best_node.mean', 'best_node.sd', 'can_cor.mean', 'can_cor.sd', 'cat_to_num', 'class_conc.mean', 'class_conc.sd', 'class_ent', 'cor.mean', 'cor.sd', 'cov.mean', 'cov.sd', 'eigenvalues.mean', 'eigenvalues.sd', 'elite_nn.mean', 'elite_nn.sd', 'eq_num_attr', 'freq_class.mean', 'freq_class.sd', 'g_mean.mean', 'g_mean.sd', 'gravity', 'h_mean.mean', 'h_mean.sd', 'inst_to_attr', 'iq_range.mean', 'iq_range.sd', 'joint_ent.mean', 'joint_ent.sd', 'kurtosis.mean', 'kurtosis.sd', 'leaves', 'leaves_branch.mean', 'leaves_branch.sd', 'leaves_corrob.mean', 'leaves_corrob.sd', 'leaves_homo.mean', 'leaves_homo.sd', 'leaves_per_class.mean', 'leaves_per_class.sd', 'lh_trace', 'linear_discr.mean', 'linear_discr.sd', 'mad.mean', 'mad.sd', 'max.mean', 'max.sd', 'mean.mean', 'mean.sd', 'median.mean', 'median.sd', 'min.mean', 'min.sd', 'mut_inf.mean', 'mut_inf.sd', 'naive_bayes.mean', 'naive_bayes.sd', 'nodes', 'nodes_per_attr', 'nodes_per_inst', 'nodes_per_level.mean', 'nodes_per_level.sd', 'nodes_repeated.mean', 'nodes_repeated.sd', 'nr_attr', 'nr_bin', 'nr_cat', 'nr_class', 'nr_cor_attr', 'nr_disc', 'nr_inst', 'nr_norm', 'nr_num', 'nr_outliers', 'ns_ratio', 'num_to_cat', 'one_nn.mean', 'one_nn.sd', 'p_trace', 'random_node.mean', 'random_node.sd', 'range.mean', 'range.sd', 'roy_root', 'sd.mean', 'sd.sd', 'sd_ratio', 'skewness.mean', 'skewness.sd', 'sparsity.mean', 'sparsity.sd', 't_mean.mean', 't_mean.sd', 'tree_depth.mean', 'tree_depth.sd', 'tree_imbalance.mean', 'tree_imbalance.sd', 'tree_shape.mean', 'tree_shape.sd', 'var.mean', 'var.sd', 'var_importance.mean', 'var_importance.sd', 'w_lambda', 'worst_node.mean', 'worst_node.sd'], [0.05462640620726539, 0.09942859138508081, 0.9323056586974273, 0.5936891167507491, 0.06227758007117438, 0.23668546365914786, 0.012566306307883664, nan, nan, nan, 0.49983551161350814, 0.29142626130499, 3.5660954912334497, 0.11260784197039646, 0.1294020343109803, 0.01371128595665523, 0.02062372595272309, 0.1298890597613645, 0.2106265617489774, 0.06766917293233081, 0.011454727820218953, 7.874730026412702, 0.06666666666666667, 0.051749636674620875, 0.0, 0.0, 2.0379481137108706, 0.0, 0.0, 16.057142857142857, 0.2698412698412698, 0.4474425249214015, 4.045548102363229, 0.5438885356055607, 7.907804959843206, 15.324141518094212, 65, 10.307692307692308, 3.7952399336334657, 0.015384615384615384, 0.022314008788587556, 54486.98873675345, 120601.32993343691, 0.06666666666666665, 0.08216567117980775, nan, 0.9163847117794486, 0.065729350536087, 0.0, 0.0, 1.0, 0.0, 0.2961644918940292, 0.282955831143017, 0.2857142857142857, 0.45538255553918716, 0.0, 0.0, 0.45285304756764705, 0.34953339236217584, 0.856015037593985, 0.06475078801951263, 64, 1.0158730158730158, 0.11387900355871886, 3.764705882352941, 2.0775409672466716, 1.6, 0.8412444993533733, 35, 17, 35, 15, 0.02304147465437788, nan, 562, 0.0, 0, 46, 1.058737737782718, 0.0, 0.9021303258145364, 0.0590332125270708, nan, 0.1637218045112782, 0.04499471112666104, 1.0, 0.0, nan, 0.34214070774042027, 0.11417404228037187, nan, 1.678087997541662, 2.681772267503188, 0.39586380006548066, 0.10887943929713777, 0.24452897529820605, 0.36103167494768734, 9.395348837209303, 3.9259127216068395, 0.05550871813412788, 0.095829585430903, 0.05382455679086538, 0.11113971045149706, 0.12988905976136467, 0.07574305715643449, 0.015873015873015876, 0.02460468918973066, nan, 0.18151629072681702, 0.011587432591795812])</code></pre>
+</div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract general, statistical and information-theoretic measures</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mfe <span class="op">=</span> MFE(groups<span class="op">=</span>[<span class="st">"general"</span>, <span class="st">"statistical"</span>, <span class="st">"info-theory"</span>])</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>mfe.fit(x, y)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>ft <span class="op">=</span> mfe.extract()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:1281: UserWarning:  * Something went wrong while precomputing 'precompute_can_cors'. Will ignore this method. Error message:
+TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'can_cor'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+ Will set it as 'np.nan' for all summary functions.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'sd'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'mean'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'lh_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'nr_disc'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'p_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'roy_root'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1267: RuntimeWarning: divide by zero encountered in log
+  np.log(np.linalg.det(S_i)) for S_i in sample_cov_matrices
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1272: RuntimeWarning: divide by zero encountered in log
+  * np.log(np.linalg.det(pooled_cov_mat))
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1271: RuntimeWarning: invalid value encountered in scalar subtract
+  (num_inst - num_classes)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'w_lambda'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(</code></pre>
+</div>
+</div>
+<div id="cell-23" class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(['attr_conc.mean', 'attr_conc.sd', 'attr_ent.mean', 'attr_ent.sd', 'attr_to_inst', 'can_cor.mean', 'can_cor.sd', 'cat_to_num', 'class_conc.mean', 'class_conc.sd', 'class_ent', 'cor.mean', 'cor.sd', 'cov.mean', 'cov.sd', 'eigenvalues.mean', 'eigenvalues.sd', 'eq_num_attr', 'freq_class.mean', 'freq_class.sd', 'g_mean.mean', 'g_mean.sd', 'gravity', 'h_mean.mean', 'h_mean.sd', 'inst_to_attr', 'iq_range.mean', 'iq_range.sd', 'joint_ent.mean', 'joint_ent.sd', 'kurtosis.mean', 'kurtosis.sd', 'lh_trace', 'mad.mean', 'mad.sd', 'max.mean', 'max.sd', 'mean.mean', 'mean.sd', 'median.mean', 'median.sd', 'min.mean', 'min.sd', 'mut_inf.mean', 'mut_inf.sd', 'nr_attr', 'nr_bin', 'nr_cat', 'nr_class', 'nr_cor_attr', 'nr_disc', 'nr_inst', 'nr_norm', 'nr_num', 'nr_outliers', 'ns_ratio', 'num_to_cat', 'p_trace', 'range.mean', 'range.sd', 'roy_root', 'sd.mean', 'sd.sd', 'sd_ratio', 'skewness.mean', 'skewness.sd', 'sparsity.mean', 'sparsity.sd', 't_mean.mean', 't_mean.sd', 'var.mean', 'var.sd', 'w_lambda'], [0.056242653040261034, 0.0786851289795218, 0.9323056586974273, 0.5936891167507491, 0.06227758007117438, nan, nan, nan, 0.49983551161350814, 0.29142626130499, 3.5660954912334497, 0.11260784197039646, 0.1294020343109803, 0.01371128595665523, 0.02062372595272309, 0.1298890597613645, 0.2106265617489774, 7.874730026412702, 0.06666666666666667, 0.051749636674620875, 0.0, 0.0, 2.0379481137108706, 0.0, 0.0, 16.057142857142857, 0.2698412698412698, 0.4474425249214015, 4.045548102363229, 0.5438885356055607, 7.907804959843206, 15.324141518094212, nan, 0.0, 0.0, 1.0, 0.0, 0.2961644918940292, 0.282955831143017, 0.2857142857142857, 0.45538255553918716, 0.0, 0.0, 0.45285304756764705, 0.34953339236217584, 35, 17, 35, 15, 0.02304147465437788, nan, 562, 0.0, 0, 46, 1.058737737782718, 0.0, nan, 1.0, 0.0, nan, 0.34214070774042027, 0.11417404228037187, nan, 1.678087997541662, 2.681772267503188, 0.39586380006548066, 0.10887943929713777, 0.24452897529820605, 0.36103167494768734, 0.12988905976136467, 0.07574305715643449, nan])</code></pre>
+</div>
+</div>
+<div id="cell-24" class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract all available measures</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>mfe <span class="op">=</span> MFE(groups<span class="op">=</span><span class="st">"all"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>mfe.fit(x, y)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>ft <span class="op">=</span> mfe.extract()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:1281: UserWarning:  * Something went wrong while precomputing 'precompute_can_cors'. Will ignore this method. Error message:
+TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'can_cor'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+ Will set it as 'np.nan' for all summary functions.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'sd'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'mean'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'lh_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'nr_disc'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'p_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'roy_root'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1267: RuntimeWarning: divide by zero encountered in log
+  np.log(np.linalg.det(S_i)) for S_i in sample_cov_matrices
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1272: RuntimeWarning: divide by zero encountered in log
+  * np.log(np.linalg.det(pooled_cov_mat))
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1271: RuntimeWarning: invalid value encountered in scalar subtract
+  (num_inst - num_classes)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'w_lambda'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\complexity.py:804: RuntimeWarning: divide by zero encountered in divide
+  attr_discriminant_ratio = _numer / _denom
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\complexity.py:990: RuntimeWarning: invalid value encountered in divide
+  f2[ind] = np.prod(np.maximum(0.0, minmax - maxmin) / (maxmax - minmin))
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'f2' with summary 'sd'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'f2' with summary 'mean'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\complexity.py:1742: RuntimeWarning: divide by zero encountered in divide
+  intra_extra[cur_ind:next_ind] = intra / extra</code></pre>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(['attr_conc.mean', 'attr_conc.sd', 'attr_ent.mean', 'attr_ent.sd', 'attr_to_inst', 'best_node.mean', 'best_node.mean.relative', 'best_node.sd', 'best_node.sd.relative', 'c1', 'c2', 'can_cor.mean', 'can_cor.sd', 'cat_to_num', 'ch', 'class_conc.mean', 'class_conc.sd', 'class_ent', 'cls_coef', 'cohesiveness.mean', 'cohesiveness.sd', 'conceptvar.mean', 'conceptvar.sd', 'cor.mean', 'cor.sd', 'cov.mean', 'cov.sd', 'density', 'eigenvalues.mean', 'eigenvalues.sd', 'elite_nn.mean', 'elite_nn.mean.relative', 'elite_nn.sd', 'elite_nn.sd.relative', 'eq_num_attr', 'f1.mean', 'f1.sd', 'f1v.mean', 'f1v.sd', 'f2.mean', 'f2.sd', 'f3.mean', 'f3.sd', 'f4.mean', 'f4.sd', 'freq_class.mean', 'freq_class.sd', 'g_mean.mean', 'g_mean.sd', 'gravity', 'h_mean.mean', 'h_mean.sd', 'hubs.mean', 'hubs.sd', 'impconceptvar.mean', 'impconceptvar.sd', 'inst_to_attr', 'int', 'iq_range.mean', 'iq_range.sd', 'joint_ent.mean', 'joint_ent.sd', 'kurtosis.mean', 'kurtosis.sd', 'l1.mean', 'l1.sd', 'l2.mean', 'l2.sd', 'l3.mean', 'l3.sd', 'leaves', 'leaves_branch.mean', 'leaves_branch.sd', 'leaves_corrob.mean', 'leaves_corrob.sd', 'leaves_homo.mean', 'leaves_homo.sd', 'leaves_per_class.mean', 'leaves_per_class.sd', 'lh_trace', 'linear_discr.mean', 'linear_discr.mean.relative', 'linear_discr.sd', 'linear_discr.sd.relative', 'lsc', 'mad.mean', 'mad.sd', 'max.mean', 'max.sd', 'mean.mean', 'mean.sd', 'median.mean', 'median.sd', 'min.mean', 'min.sd', 'mut_inf.mean', 'mut_inf.sd', 'n1', 'n2.mean', 'n2.sd', 'n3.mean', 'n3.sd', 'n4.mean', 'n4.sd', 'naive_bayes.mean', 'naive_bayes.mean.relative', 'naive_bayes.sd', 'naive_bayes.sd.relative', 'nodes', 'nodes_per_attr', 'nodes_per_inst', 'nodes_per_level.mean', 'nodes_per_level.sd', 'nodes_repeated.mean', 'nodes_repeated.sd', 'nr_attr', 'nr_bin', 'nr_cat', 'nr_class', 'nr_cor_attr', 'nr_disc', 'nr_inst', 'nr_norm', 'nr_num', 'nr_outliers', 'nre', 'ns_ratio', 'num_to_cat', 'one_itemset.mean', 'one_itemset.sd', 'one_nn.mean', 'one_nn.mean.relative', 'one_nn.sd', 'one_nn.sd.relative', 'p_trace', 'pb', 'random_node.mean', 'random_node.mean.relative', 'random_node.sd', 'random_node.sd.relative', 'range.mean', 'range.sd', 'roy_root', 'sc', 'sd.mean', 'sd.sd', 'sd_ratio', 'sil', 'skewness.mean', 'skewness.sd', 'sparsity.mean', 'sparsity.sd', 't1', 't2', 't3', 't4', 't_mean.mean', 't_mean.sd', 'tree_depth.mean', 'tree_depth.sd', 'tree_imbalance.mean', 'tree_imbalance.sd', 'tree_shape.mean', 'tree_shape.sd', 'two_itemset.mean', 'two_itemset.sd', 'var.mean', 'var.sd', 'var_importance.mean', 'var_importance.sd', 'vdb', 'vdu', 'w_lambda', 'wg_dist.mean', 'wg_dist.sd', 'worst_node.mean', 'worst_node.mean.relative', 'worst_node.sd', 'worst_node.sd.relative'], [0.052980643832273806, 0.07686144851342408, 0.9323056586974273, 0.5936891167507491, 0.06227758007117438, 0.23668546365914786, 4.0, 0.012566306307883664, 2.0, 0.9127707582193024, 0.044258601707557244, nan, nan, nan, 28.45955710776529, 0.49983551161350814, 0.29142626130499, 3.5660954912334497, 0.2463991568757563, 30.60053380782918, 7.617465895835143, 0.8378897056058503, 0.07971521015193515, 0.11260784197039646, 0.1294020343109803, 0.01371128595665523, 0.02062372595272309, 0.9354482653624374, 0.1298890597613645, 0.2106265617489774, 0.06766917293233081, 1.0, 0.011454727820218953, 1.0, 7.874730026412702, 0.5304709059831386, 0.32451611700322464, 0.01042582726699052, 0.014048241350080383, nan, nan, 0.1307561876414335, 0.509236485736217, 0.004761904761904762, 0.04879500364742667, 0.06666666666666667, 0.051749636674620875, 0.0, 0.0, 2.0379481137108706, 0.0, 0.0, 0.885768298061651, 0.2965435519575326, 24.46952846975089, 4.948385846137504, 16.057142857142857, 4.258600689567639, 0.2698412698412698, 0.4474425249214015, 4.045548102363229, 0.5438885356055607, 7.907804959843206, 15.324141518094212, 0.000539566647658505, 0.005528912873510568, 0.0006802721088435372, 0.006970714806775234, 0.0011113195832165386, 0.007286335561842967, 65, 10.36923076923077, 3.90340088404182, 0.015384615384615385, 0.022305138941940094, 74193.56461838815, 189456.29111501787, 0.06666666666666665, 0.08216567117980775, nan, 0.9163847117794486, 7.0, 0.065729350536087, 7.0, 0.9815161915375945, 0.0, 0.0, 1.0, 0.0, 0.2961644918940292, 0.282955831143017, 0.2857142857142857, 0.45538255553918716, 0.0, 0.0, 0.45285304756764705, 0.34953339236217584, 0.19750889679715303, 0.29306508748938653, 0.17039165681514168, 0.09786476868327403, 0.2973964198191492, 0.4822064056939502, 0.5001284399326659, 0.856015037593985, 5.0, 0.06475078801951263, 6.0, 64, 1.0158730158730158, 0.11387900355871886, 3.5555555555555554, 2.0926263324636483, 1.5238095238095237, 0.7726449737860468, 35, 17, 35, 15, 0.02304147465437788, nan, 562, 0.0, 0, 46, 2.4718290353559986, 1.058737737782718, 0.0, 0.3608247422680412, 0.312649982878728, 0.9021303258145364, 6.0, 0.0590332125270708, 5.0, nan, -0.4677574798903602, 0.2029135338345865, 3.0, 0.028608644881972133, 3.0, 1.0, 0.0, nan, 0, 0.34214070774042027, 0.11417404228037187, nan, 0.11419211493687098, 1.678087997541662, 2.681772267503188, 0.39586380006548066, 0.10887943929713777, 0.36298932384341637, 0.11209964412811388, 0.060498220640569395, 0.5396825396825397, 0.24452897529820605, 0.36103167494768734, 9.457364341085272, 4.029205396108644, 0.05203942068517449, 0.09361447084819509, 0.053822796161358176, 0.11114065027333381, 0.46309314586994726, 0.2404524322070628, 0.12988905976136467, 0.07574305715643449, 0.015873015873015872, 0.024850648603178902, 2.2438368628465932, 0.0, nan, 3.7348660074321143, 0.3554799458893605, 0.19047619047619047, 2.0, 0.04721819920441275, 4.0])</code></pre>
+</div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Extract default measures using min, median and max </span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>mfe <span class="op">=</span> MFE(summary<span class="op">=</span>[<span class="st">"min"</span>, <span class="st">"median"</span>, <span class="st">"max"</span>])</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>mfe.fit(x, y)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>ft <span class="op">=</span> mfe.extract()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:1281: UserWarning:  * Something went wrong while precomputing 'precompute_can_cors'. Will ignore this method. Error message:
+TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'can_cor'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+ Will set it as 'np.nan' for all summary functions.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'max'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'min'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\numpy\core\_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'median'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'lh_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'nr_disc'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'p_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'roy_root'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1267: RuntimeWarning: divide by zero encountered in log
+  np.log(np.linalg.det(S_i)) for S_i in sample_cov_matrices
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1272: RuntimeWarning: divide by zero encountered in log
+  * np.log(np.linalg.det(pooled_cov_mat))
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1271: RuntimeWarning: invalid value encountered in scalar subtract
+  (num_inst - num_classes)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'w_lambda'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(</code></pre>
+</div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(['attr_conc.max', 'attr_conc.median', 'attr_conc.min', 'attr_ent.max', 'attr_ent.median', 'attr_ent.min', 'attr_to_inst', 'best_node.max', 'best_node.median', 'best_node.min', 'can_cor.max', 'can_cor.median', 'can_cor.min', 'cat_to_num', 'class_conc.max', 'class_conc.median', 'class_conc.min', 'class_ent', 'cor.max', 'cor.median', 'cor.min', 'cov.max', 'cov.median', 'cov.min', 'eigenvalues.max', 'eigenvalues.median', 'eigenvalues.min', 'elite_nn.max', 'elite_nn.median', 'elite_nn.min', 'eq_num_attr', 'freq_class.max', 'freq_class.median', 'freq_class.min', 'g_mean.max', 'g_mean.median', 'g_mean.min', 'gravity', 'h_mean.max', 'h_mean.median', 'h_mean.min', 'inst_to_attr', 'iq_range.max', 'iq_range.median', 'iq_range.min', 'joint_ent.max', 'joint_ent.median', 'joint_ent.min', 'kurtosis.max', 'kurtosis.median', 'kurtosis.min', 'leaves', 'leaves_branch.max', 'leaves_branch.median', 'leaves_branch.min', 'leaves_corrob.max', 'leaves_corrob.median', 'leaves_corrob.min', 'leaves_homo.max', 'leaves_homo.median', 'leaves_homo.min', 'leaves_per_class.max', 'leaves_per_class.median', 'leaves_per_class.min', 'lh_trace', 'linear_discr.max', 'linear_discr.median', 'linear_discr.min', 'mad.max', 'mad.median', 'mad.min', 'max.max', 'max.median', 'max.min', 'mean.max', 'mean.median', 'mean.min', 'median.max', 'median.median', 'median.min', 'min.max', 'min.median', 'min.min', 'mut_inf.max', 'mut_inf.median', 'mut_inf.min', 'naive_bayes.max', 'naive_bayes.median', 'naive_bayes.min', 'nodes', 'nodes_per_attr', 'nodes_per_inst', 'nodes_per_level.max', 'nodes_per_level.median', 'nodes_per_level.min', 'nodes_repeated.max', 'nodes_repeated.median', 'nodes_repeated.min', 'nr_attr', 'nr_bin', 'nr_cat', 'nr_class', 'nr_cor_attr', 'nr_disc', 'nr_inst', 'nr_norm', 'nr_num', 'nr_outliers', 'ns_ratio', 'num_to_cat', 'one_nn.max', 'one_nn.median', 'one_nn.min', 'p_trace', 'random_node.max', 'random_node.median', 'random_node.min', 'range.max', 'range.median', 'range.min', 'roy_root', 'sd.max', 'sd.median', 'sd.min', 'sd_ratio', 'skewness.max', 'skewness.median', 'skewness.min', 'sparsity.max', 'sparsity.median', 'sparsity.min', 't_mean.max', 't_mean.median', 't_mean.min', 'tree_depth.max', 'tree_depth.median', 'tree_depth.min', 'tree_imbalance.max', 'tree_imbalance.median', 'tree_imbalance.min', 'tree_shape.max', 'tree_shape.median', 'tree_shape.min', 'var.max', 'var.median', 'var.min', 'var_importance.max', 'var_importance.median', 'var_importance.min', 'w_lambda', 'worst_node.max', 'worst_node.median', 'worst_node.min'], [0.5887842627610308, 0.015262363980295984, 2.508503490344683e-05, 2.634134749840698, 0.7983386963307958, 0.08524302584619818, 0.06227758007117438, 0.25, 0.23214285714285715, 0.21428571428571427, nan, nan, nan, nan, 1.0000000000009446, 0.5412948160851693, 0.017231241145325094, 3.5660954912334497, 0.9525985540982554, 0.06948760051863591, 7.956687838176419e-05, 0.21442391256081852, 0.0070095977569287395, 3.171763690918555e-06, 1.282821550590635, 0.04915980883469041, 2.0418950299310688e-17, 0.07142857142857142, 0.07142857142857142, 0.03508771929824561, 7.874730026412702, 0.16370106761565836, 0.03558718861209965, 0.03558718861209965, 0.0, 0.0, 0.0, 2.0379481137108706, 0.0, 0.0, 0.0, 16.057142857142857, 1.0, 0.0, 0.0, 5.57219057149742, 3.82929427573178, 3.5660998945338758, 88.35149399635323, 2.0066270240773365, -2.0035050742991163, 64, 17, 10.0, 2, 0.1103202846975089, 0.0035587188612099642, 0.0017793594306049821, 493447.5294117647, 6553.6, 128.0, 0.25, 0.015625, 0.015625, nan, 1.0, 0.9027255639097744, 0.7857142857142857, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.9804270462633452, 0.1708185053380783, 0.010676156583629894, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.209322753318868, 0.36779814354374984, 0.05387616663355832, 0.9642857142857143, 0.8660714285714286, 0.7543859649122807, 63, 1.0, 0.11209964412811388, 8, 3.0, 1, 4, 1.0, 1, 35, 17, 35, 15, 0.02304147465437788, nan, 562, 0.0, 0, 46, 1.058737737782718, 0.0, 0.9821428571428571, 0.9196428571428572, 0.7678571428571429, nan, 0.32142857142857145, 0.2589285714285714, 0.21428571428571427, 1.0, 1.0, 1.0, nan, 0.5004422654361697, 0.35332791974953115, 0.10286400572067084, nan, 9.497066675536004, 1.7446686919557544, -6.9176954176197425, 0.49910873440285203, 0.3321449792038027, 0.1413292589763178, 1.0, 0.0, 0.0, 17, 10.0, 0, 0.28916452976398893, 0.011623946278419239, 3.051693258826471e-05, 0.5, 0.009765625, 0.00012969970703125, 0.2504424610348857, 0.12484061887453114, 0.010581003672902201, 0.10332643538995144, 0.005473043798515496, 0.0, nan, 0.32142857142857145, 0.1875, 0.17543859649122806])</code></pre>
+</div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Extract default measures using quantile</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>mfe <span class="op">=</span> MFE(summary<span class="op">=</span>[<span class="st">"quantiles"</span>])</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>mfe.fit(x, y)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>ft <span class="op">=</span> mfe.extract()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:1281: UserWarning:  * Something went wrong while precomputing 'precompute_can_cors'. Will ignore this method. Error message:
+TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'can_cor'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+ Will set it as 'np.nan' for all summary functions.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:731: RuntimeWarning: Can't summarize feature 'can_cor' with summary 'quantiles'. Will set it as 'np.nan'.
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'lh_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'nr_disc'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'p_trace'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'roy_root'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1267: RuntimeWarning: divide by zero encountered in log
+  np.log(np.linalg.det(S_i)) for S_i in sample_cov_matrices
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1272: RuntimeWarning: divide by zero encountered in log
+  * np.log(np.linalg.det(pooled_cov_mat))
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\statistical.py:1271: RuntimeWarning: invalid value encountered in scalar subtract
+  (num_inst - num_classes)
+c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\pymfe\_internal.py:606: RuntimeWarning: Can't extract feature 'w_lambda'.
+ Exception message: TypeError("__init__() got an unexpected keyword argument 'sparse'").
+  warnings.warn(</code></pre>
+</div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(['attr_conc.quantiles.0', 'attr_conc.quantiles.1', 'attr_conc.quantiles.2', 'attr_conc.quantiles.3', 'attr_conc.quantiles.4', 'attr_ent.quantiles.0', 'attr_ent.quantiles.1', 'attr_ent.quantiles.2', 'attr_ent.quantiles.3', 'attr_ent.quantiles.4', 'attr_to_inst', 'best_node.quantiles.0', 'best_node.quantiles.1', 'best_node.quantiles.2', 'best_node.quantiles.3', 'best_node.quantiles.4', 'can_cor.quantiles.0', 'can_cor.quantiles.1', 'can_cor.quantiles.2', 'can_cor.quantiles.3', 'can_cor.quantiles.4', 'cat_to_num', 'class_conc.quantiles.0', 'class_conc.quantiles.1', 'class_conc.quantiles.2', 'class_conc.quantiles.3', 'class_conc.quantiles.4', 'class_ent', 'cor.quantiles.0', 'cor.quantiles.1', 'cor.quantiles.2', 'cor.quantiles.3', 'cor.quantiles.4', 'cov.quantiles.0', 'cov.quantiles.1', 'cov.quantiles.2', 'cov.quantiles.3', 'cov.quantiles.4', 'eigenvalues.quantiles.0', 'eigenvalues.quantiles.1', 'eigenvalues.quantiles.2', 'eigenvalues.quantiles.3', 'eigenvalues.quantiles.4', 'elite_nn.quantiles.0', 'elite_nn.quantiles.1', 'elite_nn.quantiles.2', 'elite_nn.quantiles.3', 'elite_nn.quantiles.4', 'eq_num_attr', 'freq_class.quantiles.0', 'freq_class.quantiles.1', 'freq_class.quantiles.2', 'freq_class.quantiles.3', 'freq_class.quantiles.4', 'g_mean.quantiles.0', 'g_mean.quantiles.1', 'g_mean.quantiles.2', 'g_mean.quantiles.3', 'g_mean.quantiles.4', 'gravity', 'h_mean.quantiles.0', 'h_mean.quantiles.1', 'h_mean.quantiles.2', 'h_mean.quantiles.3', 'h_mean.quantiles.4', 'inst_to_attr', 'iq_range.quantiles.0', 'iq_range.quantiles.1', 'iq_range.quantiles.2', 'iq_range.quantiles.3', 'iq_range.quantiles.4', 'joint_ent.quantiles.0', 'joint_ent.quantiles.1', 'joint_ent.quantiles.2', 'joint_ent.quantiles.3', 'joint_ent.quantiles.4', 'kurtosis.quantiles.0', 'kurtosis.quantiles.1', 'kurtosis.quantiles.2', 'kurtosis.quantiles.3', 'kurtosis.quantiles.4', 'leaves', 'leaves_branch.quantiles.0', 'leaves_branch.quantiles.1', 'leaves_branch.quantiles.2', 'leaves_branch.quantiles.3', 'leaves_branch.quantiles.4', 'leaves_corrob.quantiles.0', 'leaves_corrob.quantiles.1', 'leaves_corrob.quantiles.2', 'leaves_corrob.quantiles.3', 'leaves_corrob.quantiles.4', 'leaves_homo.quantiles.0', 'leaves_homo.quantiles.1', 'leaves_homo.quantiles.2', 'leaves_homo.quantiles.3', 'leaves_homo.quantiles.4', 'leaves_per_class.quantiles.0', 'leaves_per_class.quantiles.1', 'leaves_per_class.quantiles.2', 'leaves_per_class.quantiles.3', 'leaves_per_class.quantiles.4', 'lh_trace', 'linear_discr.quantiles.0', 'linear_discr.quantiles.1', 'linear_discr.quantiles.2', 'linear_discr.quantiles.3', 'linear_discr.quantiles.4', 'mad.quantiles.0', 'mad.quantiles.1', 'mad.quantiles.2', 'mad.quantiles.3', 'mad.quantiles.4', 'max.quantiles.0', 'max.quantiles.1', 'max.quantiles.2', 'max.quantiles.3', 'max.quantiles.4', 'mean.quantiles.0', 'mean.quantiles.1', 'mean.quantiles.2', 'mean.quantiles.3', 'mean.quantiles.4', 'median.quantiles.0', 'median.quantiles.1', 'median.quantiles.2', 'median.quantiles.3', 'median.quantiles.4', 'min.quantiles.0', 'min.quantiles.1', 'min.quantiles.2', 'min.quantiles.3', 'min.quantiles.4', 'mut_inf.quantiles.0', 'mut_inf.quantiles.1', 'mut_inf.quantiles.2', 'mut_inf.quantiles.3', 'mut_inf.quantiles.4', 'naive_bayes.quantiles.0', 'naive_bayes.quantiles.1', 'naive_bayes.quantiles.2', 'naive_bayes.quantiles.3', 'naive_bayes.quantiles.4', 'nodes', 'nodes_per_attr', 'nodes_per_inst', 'nodes_per_level.quantiles.0', 'nodes_per_level.quantiles.1', 'nodes_per_level.quantiles.2', 'nodes_per_level.quantiles.3', 'nodes_per_level.quantiles.4', 'nodes_repeated.quantiles.0', 'nodes_repeated.quantiles.1', 'nodes_repeated.quantiles.2', 'nodes_repeated.quantiles.3', 'nodes_repeated.quantiles.4', 'nr_attr', 'nr_bin', 'nr_cat', 'nr_class', 'nr_cor_attr', 'nr_disc', 'nr_inst', 'nr_norm', 'nr_num', 'nr_outliers', 'ns_ratio', 'num_to_cat', 'one_nn.quantiles.0', 'one_nn.quantiles.1', 'one_nn.quantiles.2', 'one_nn.quantiles.3', 'one_nn.quantiles.4', 'p_trace', 'random_node.quantiles.0', 'random_node.quantiles.1', 'random_node.quantiles.2', 'random_node.quantiles.3', 'random_node.quantiles.4', 'range.quantiles.0', 'range.quantiles.1', 'range.quantiles.2', 'range.quantiles.3', 'range.quantiles.4', 'roy_root', 'sd.quantiles.0', 'sd.quantiles.1', 'sd.quantiles.2', 'sd.quantiles.3', 'sd.quantiles.4', 'sd_ratio', 'skewness.quantiles.0', 'skewness.quantiles.1', 'skewness.quantiles.2', 'skewness.quantiles.3', 'skewness.quantiles.4', 'sparsity.quantiles.0', 'sparsity.quantiles.1', 'sparsity.quantiles.2', 'sparsity.quantiles.3', 'sparsity.quantiles.4', 't_mean.quantiles.0', 't_mean.quantiles.1', 't_mean.quantiles.2', 't_mean.quantiles.3', 't_mean.quantiles.4', 'tree_depth.quantiles.0', 'tree_depth.quantiles.1', 'tree_depth.quantiles.2', 'tree_depth.quantiles.3', 'tree_depth.quantiles.4', 'tree_imbalance.quantiles.0', 'tree_imbalance.quantiles.1', 'tree_imbalance.quantiles.2', 'tree_imbalance.quantiles.3', 'tree_imbalance.quantiles.4', 'tree_shape.quantiles.0', 'tree_shape.quantiles.1', 'tree_shape.quantiles.2', 'tree_shape.quantiles.3', 'tree_shape.quantiles.4', 'var.quantiles.0', 'var.quantiles.1', 'var.quantiles.2', 'var.quantiles.3', 'var.quantiles.4', 'var_importance.quantiles.0', 'var_importance.quantiles.1', 'var_importance.quantiles.2', 'var_importance.quantiles.3', 'var_importance.quantiles.4', 'w_lambda', 'worst_node.quantiles.0', 'worst_node.quantiles.1', 'worst_node.quantiles.2', 'worst_node.quantiles.3', 'worst_node.quantiles.4'], [6.369666416946446e-07, 0.003446231291452004, 0.011876971487219334, 0.06250158453926385, 0.9019571946532101, 0.08524302584619818, 0.4431565941120929, 0.7983386963307958, 1.2914297369382235, 2.634134749840698, 0.06227758007117438, 0.21428571428571427, 0.22908834586466165, 0.23214285714285715, 0.25, 0.25, nan, nan, nan, nan, nan, nan, 0.017231241145325094, 0.2678937021710781, 0.5412948160851693, 0.6673841380828507, 1.0000000000009446, 3.5660954912334497, 7.956687838176419e-05, 0.03323251939178119, 0.06948760051863591, 0.13635644142651815, 0.9525985540982554, 3.171763690918555e-06, 0.0028355567396806704, 0.0070095977569287395, 0.0158588184545898, 0.21442391256081852, 2.0418950299310688e-17, 0.012495166992341829, 0.04915980883469041, 0.15647520035535967, 1.282821550590635, 0.03508771929824561, 0.07142857142857142, 0.07142857142857142, 0.07142857142857142, 0.07142857142857142, 7.874730026412702, 0.03558718861209965, 0.03558718861209965, 0.03558718861209965, 0.07829181494661921, 0.16370106761565836, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0379481137108706, 0.0, 0.0, 0.0, 0.0, 0.0, 16.057142857142857, 0.0, 0.0, 0.0, 1.0, 1.0, 3.5660998945338758, 3.6801699091746625, 3.82929427573178, 4.195346021982138, 5.57219057149742, -2.0035050742991163, -0.8564070788807246, 2.0066270240773365, 8.752240170917887, 88.35149399635323, 63, 2.0, 8.0, 11.0, 13.0, 17.0, 0.0017793594306049821, 0.0026690391459074734, 0.0035587188612099642, 0.02313167259786477, 0.1103202846975089, 126.0, 2016.0, 11729.454545454546, 39699.692307692305, 485737.4117647059, 0.015873015873015872, 0.015873015873015872, 0.015873015873015872, 0.07936507936507936, 0.25396825396825395, nan, 0.7857142857142857, 0.8928571428571429, 0.9027255639097744, 0.96906328320802, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.010676156583629894, 0.0791814946619217, 0.1708185053380783, 0.5427046263345195, 0.9804270462633452, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05387616663355832, 0.1645046628004876, 0.36779814354374984, 0.6464137682830162, 1.209322753318868, 0.7543859649122807, 0.8258928571428571, 0.8660714285714286, 0.8766447368421052, 0.9642857142857143, 62, 0.9841269841269841, 0.1103202846975089, 1.0, 2.0, 3.0, 5.0, 7.0, 1.0, 1.0, 1.0, 2.0, 4.0, 35, 17, 35, 15, 0.02304147465437788, nan, 562, 0.0, 0, 46, 1.058737737782718, 0.0, 0.7678571428571429, 0.8811090225563909, 0.9196428571428572, 0.9295112781954887, 0.9821428571428571, nan, 0.125, 0.16071428571428573, 0.16071428571428573, 0.17543859649122806, 0.25, 1.0, 1.0, 1.0, 1.0, 1.0, nan, 0.10286400572067084, 0.2602697029761836, 0.35332791974953115, 0.44112243375590976, 0.5004422654361697, nan, -6.9176954176197425, -0.1709875834704165, 1.7446686919557544, 3.1087802691365325, 9.497066675536004, 0.1413292589763178, 0.3321449792038027, 0.3321449792038027, 0.49910873440285203, 0.49910873440285203, 0.0, 0.0, 0.0, 0.5710059171597633, 1.0, 0.0, 7.0, 10.0, 12.0, 17.0, 3.051693258826471e-05, 0.0012195056425173911, 0.011623946278419239, 0.030580376940240697, 0.28916452976398893, 0.00012969970703125, 0.0015869140625, 0.00537109375, 0.03125, 0.5, 0.010581003672902201, 0.06774887243800762, 0.12484061887453114, 0.19462734948395405, 0.2504424610348857, 0.0, 0.0, 0.005828436252964554, 0.016888483603976094, 0.10332643538995144, nan, 0.15789473684210525, 0.16439536340852132, 0.17857142857142858, 0.17857142857142858, 0.19642857142857142])</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
