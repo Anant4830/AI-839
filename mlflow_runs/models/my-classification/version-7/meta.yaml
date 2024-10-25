@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1728372506222
+current_stage: None
+description: null
+last_updated_timestamp: 1728372506222
+name: my-classification
+run_id: bd32ee61f0f1489e8547da2882a4f9a4
+run_link: null
+source: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/bd32ee61f0f1489e8547da2882a4f9a4/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/bd32ee61f0f1489e8547da2882a4f9a4/artifacts/model
+user_id: null
+version: 7

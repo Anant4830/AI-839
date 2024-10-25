@@ -1,0 +1,12 @@
+# pipelines.data_science.nodes.train_model { #src.anant_ai_839.pipelines.data_science.nodes.train_model }
+
+`anant_ai_839.pipelines.data_science.nodes.train_model(X_train, y_train)`
+
+Trains a logistic regression model on the provided training data.
+
+Args:
+    X_train: Training features.
+    y_train: Training target.
+
+Returns:
+    The trained logistic regression model.

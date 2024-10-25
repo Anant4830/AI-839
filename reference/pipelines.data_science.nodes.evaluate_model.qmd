@@ -1,0 +1,13 @@
+# pipelines.data_science.nodes.evaluate_model { #src.anant_ai_839.pipelines.data_science.nodes.evaluate_model }
+
+`anant_ai_839.pipelines.data_science.nodes.evaluate_model(regressor, X_test, y_test)`
+
+Evaluates the trained model on the test dataset and logs the accuracy score.
+
+Args:
+    regressor: The trained logistic regression model.
+    X_test: Testing features.
+    y_test: Testing target.
+
+Logs:
+    The accuracy of the model on the test data.

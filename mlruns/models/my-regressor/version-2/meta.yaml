@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1727266397432
+current_stage: None
+description: null
+last_updated_timestamp: 1727266397432
+name: my-regressor
+run_id: c429cbe8c11e4a4daf6124d0587c3f7c
+run_link: null
+source: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlruns/842918486569443290/c429cbe8c11e4a4daf6124d0587c3f7c/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlruns/842918486569443290/c429cbe8c11e4a4daf6124d0587c3f7c/artifacts/model
+user_id: null
+version: 2

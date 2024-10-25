@@ -1,0 +1,5 @@
+# pipelines.data_preprocessing.nodes.preprocess_data { #src.anant_ai_839.pipelines.data_preprocessing.nodes.preprocess_data }
+
+`anant_ai_839.pipelines.data_preprocessing.nodes.preprocess_data(df)`
+
+Preprocess the data, including encoding and scaling.

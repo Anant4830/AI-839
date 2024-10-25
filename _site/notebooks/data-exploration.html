@@ -1,0 +1,2782 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>data-exploration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="cell-0" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext kedro.ipython</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/23/24 14:41:00] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Using                                                                  <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\framework\project\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\framework\project\__init__.py#246" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">246</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         <span style="color: #008000; text-decoration-color: #008000">'c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-p</span> <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         <span style="color: #008000; text-decoration-color: #008000">ackages\kedro\framework\project\rich_logging.yml'</span> as logging           <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         configuration.                                                         <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/23/24 14:41:01] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Registered line magic <span style="color: #008000; text-decoration-color: #008000">'%reload_kedro'</span>                                   <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#58" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">58</span></a>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Registered line magic <span style="color: #008000; text-decoration-color: #008000">'%load_node'</span>                                      <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#60" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">60</span></a>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Resolved project path as:                                              <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#175" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">175</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         c:\Users\Admin\Downloads\AI-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">839</span>\MLOps\kedro-projects\anant-ai-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">839</span>.     <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         To set a different path, run <span style="color: #008000; text-decoration-color: #008000">'%reload_kedro &lt;project_root&gt;'</span>            <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/23/24 14:41:26] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Kedro is sending anonymous usage data with the sole purpose of improving <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro_telemetry\plugin.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">plugin.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro_telemetry\plugin.py#233" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">233</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         the product. No personal data or IP addresses are stored on our side. If <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         you want to opt out, set the `KEDRO_DISABLE_TELEMETRY` or `DO_NOT_TRACK` <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         environment variables, or create a `.telemetry` file in the current      <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         working directory with the contents `consent: false`. Read more at       <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         <span style="color: #0000ff; text-decoration-color: #0000ff; text-decoration: underline">https://docs.kedro.org/en/stable/configuration/telemetry.html</span>            <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/23/24 14:41:29] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Kedro project Anant-ai-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">839</span>                                             <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#141" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">141</span></a>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Defined global variable <span style="color: #008000; text-decoration-color: #008000">'context'</span>, <span style="color: #008000; text-decoration-color: #008000">'session'</span>, <span style="color: #008000; text-decoration-color: #008000">'catalog'</span> and            <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#142" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">142</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         <span style="color: #008000; text-decoration-color: #008000">'pipelines'</span>                                                            <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/23/24 14:41:33] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Registered line magic <span style="color: #008000; text-decoration-color: #008000">'run_viz'</span>                                        <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#148" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">148</span></a>
+</pre>
+</div>
+</div>
+<div id="cell-1" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>reload_kedro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/15/24 17:18:47] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Resolved project path as:                                              <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#175" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">175</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         C:\Users\Admin\Downloads\AI-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">839</span>\MLOps\kedro-projects\anant-ai-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">839</span>.     <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         To set a different path, run <span style="color: #008000; text-decoration-color: #008000">'%reload_kedro &lt;project_root&gt;'</span>            <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Kedro is sending anonymous usage data with the sole purpose of improving <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro_telemetry\plugin.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">plugin.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro_telemetry\plugin.py#233" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">233</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         the product. No personal data or IP addresses are stored on our side. If <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         you want to opt out, set the `KEDRO_DISABLE_TELEMETRY` or `DO_NOT_TRACK` <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         environment variables, or create a `.telemetry` file in the current      <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         working directory with the contents `consent: false`. Read more at       <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         <span style="color: #0000ff; text-decoration-color: #0000ff; text-decoration: underline">https://docs.kedro.org/en/stable/configuration/telemetry.html</span>            <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">             </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/15/24 17:18:48] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Kedro project Anant-ai-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">839</span>                                             <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#141" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">141</span></a>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Defined global variable <span style="color: #008000; text-decoration-color: #008000">'context'</span>, <span style="color: #008000; text-decoration-color: #008000">'session'</span>, <span style="color: #008000; text-decoration-color: #008000">'catalog'</span> and            <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#142" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">142</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span>         <span style="color: #008000; text-decoration-color: #008000">'pipelines'</span>                                                            <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">               </span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">                    </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Registered line magic <span style="color: #008000; text-decoration-color: #008000">'run_viz'</span>                                        <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">__init__.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\ipython\__init__.py#148" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">148</span></a>
+</pre>
+</div>
+</div>
+<div id="cell-2" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>catalog</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-bold">{</span><span class="ansi-green-fg">'dataset_id_742'</span>: <span class="ansi-green-fg">"kedro_datasets.pandas.csv_dataset.CSVDataset</span><span class="ansi-green-fg">(</span><span class="ansi-green-fg">filepath</span><span class="ansi-green-fg">=</span><span class="ansi-green-fg">PurePosixPath</span><span class="ansi-green-fg">(</span><span class="ansi-green-fg">'C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/data/01_raw/dataset_id_742.csv'</span><span class="ansi-green-fg">)</span><span class="ansi-green-fg">, "</span>
+                   <span class="ansi-green-fg">"</span><span class="ansi-green-fg">protocol</span><span class="ansi-green-fg">='file', </span><span class="ansi-green-fg">load_args</span><span class="ansi-green-fg">=</span><span class="ansi-green-fg">{</span><span class="ansi-green-fg">}</span><span class="ansi-green-fg">, </span><span class="ansi-green-fg">save_args</span><span class="ansi-green-fg">=</span><span class="ansi-green-fg">{</span><span class="ansi-green-fg">'index': False</span><span class="ansi-green-fg">}</span><span class="ansi-green-fg">)</span><span class="ansi-green-fg">"</span>,
+ <span class="ansi-green-fg">'parameters'</span>: <span class="ansi-green-fg">"kedro.io.memory_dataset.MemoryDataset</span><span class="ansi-green-fg">(</span><span class="ansi-green-fg">data</span><span class="ansi-green-fg">='</span><span class="ansi-green-fg">&lt;</span><span class="ansi-green-fg">dict</span><span class="ansi-green-fg">&gt;</span><span class="ansi-green-fg">'</span><span class="ansi-green-fg">)</span><span class="ansi-green-fg">"</span><span class="ansi-bold">}</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-3" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>context</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-magenta-fg ansi-bold">KedroContext</span><span class="ansi-bold">(</span>
+    <span class="ansi-yellow-fg">project_path</span>=<span class="ansi-magenta-fg ansi-bold">WindowsPath</span><span class="ansi-bold">(</span><span class="ansi-green-fg">'C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839'</span><span class="ansi-bold">)</span>,
+    <span class="ansi-yellow-fg">config_loader</span>=<span class="ansi-magenta-fg ansi-bold">OmegaConfigLoader</span><span class="ansi-bold">(</span><span class="ansi-yellow-fg">conf_source</span>=<span class="ansi-magenta-fg">C</span>:\Users\Admin\Downloads\AI-<span class="ansi-cyan-fg ansi-bold">839</span>\MLOps\kedro-projects\anant-ai-<span class="ansi-cyan-fg ansi-bold">839</span>\conf, <span class="ansi-yellow-fg">env</span>=<span style="font-style:italic" class="ansi-magenta-fg">None</span>, <span class="ansi-yellow-fg">runtime_params</span>=<span class="ansi-bold">{</span><span class="ansi-bold">}</span>, <span class="ansi-yellow-fg">config_patterns</span>=<span class="ansi-bold">{</span><span class="ansi-green-fg">'catalog'</span>: <span class="ansi-bold">[</span><span class="ansi-green-fg">'catalog*'</span>, <span class="ansi-green-fg">'catalog*/**'</span>, <span class="ansi-green-fg">'**/catalog*'</span><span class="ansi-bold">]</span>, <span class="ansi-green-fg">'parameters'</span>: <span class="ansi-bold">[</span><span class="ansi-green-fg">'parameters*'</span>, <span class="ansi-green-fg">'parameters*/**'</span>, <span class="ansi-green-fg">'**/parameters*'</span><span class="ansi-bold">]</span>, <span class="ansi-green-fg">'credentials'</span>: <span class="ansi-bold">[</span><span class="ansi-green-fg">'credentials*'</span>, <span class="ansi-green-fg">'credentials*/**'</span>, <span class="ansi-green-fg">'**/credentials*'</span><span class="ansi-bold">]</span>, <span class="ansi-green-fg">'globals'</span>: <span class="ansi-bold">[</span><span class="ansi-green-fg">'globals.yml'</span><span class="ansi-bold">]</span>, <span class="ansi-green-fg">'spark'</span>: <span class="ansi-bold">&lt;</span><span class="ansi-bright-magenta-fg ansi-bold">BoxList:</span> <span class="ansi-bold">[</span><span class="ansi-green-fg">'spark*'</span>, <span class="ansi-green-fg">'spark*/**'</span><span class="ansi-bold">]</span>&gt;<span class="ansi-bold">}</span>, <span class="ansi-yellow-fg">base_env</span>=<span class="ansi-magenta-fg">base</span><span class="ansi-bold">)</span>, <span class="ansi-yellow-fg">default_run_env</span>=<span class="ansi-magenta-fg">local</span><span class="ansi-bold">)</span>, <span class="ansi-yellow-fg">custom_resolvers</span>=<span style="font-style:italic" class="ansi-magenta-fg">None</span><span class="ansi-bold">)</span>, <span class="ansi-yellow-fg">merge_strategy</span>=<span class="ansi-bold">{</span><span class="ansi-bold">}</span><span class="ansi-bold">)</span>,
+    <span class="ansi-yellow-fg">env</span>=<span style="font-style:italic" class="ansi-magenta-fg">None</span>,
+    <span class="ansi-yellow-fg">_package_name</span>=<span style="font-style:italic" class="ansi-magenta-fg">None</span>,
+    <span class="ansi-yellow-fg">_hook_manager</span>=&lt;pluggy._manager.PluginManager object at <span class="ansi-cyan-fg ansi-bold">0x000001F72F0EB730</span><span class="ansi-bold">&gt;</span>,
+    <span class="ansi-yellow-fg">_extra_params</span>=<span style="font-style:italic" class="ansi-magenta-fg">None</span>
+<span class="ansi-bold">)</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-bold">&lt;</span><span class="ansi-bright-magenta-fg ansi-bold">kedro.framework.session.session.KedroSession</span> object at <span class="ansi-cyan-fg ansi-bold">0x000001F72D038430</span><span class="ansi-bold">&gt;</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-5" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pipelines</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-bold">{</span><span class="ansi-green-fg">'__default__'</span>: <span class="ansi-magenta-fg ansi-bold">Pipeline</span><span class="ansi-bold">(</span><span class="ansi-bold">[</span><span class="ansi-bold">]</span><span class="ansi-bold">)</span><span class="ansi-bold">}</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> catalog.load(<span class="st">"dataset_id_742"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dataset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/23/24 14:42:15] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Loading data from dataset_id_742 <span style="font-weight: bold">(</span>CSVDataset<span style="font-weight: bold">)</span><span style="color: #808000; text-decoration-color: #808000">...</span>                   <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\io\data_catalog.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">data_catalog.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\io\data_catalog.py#537" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">537</span></a>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">checking_status</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">credit_history</th>
+<th data-quarto-table-cell-role="th">purpose</th>
+<th data-quarto-table-cell-role="th">credit_amount</th>
+<th data-quarto-table-cell-role="th">savings_status</th>
+<th data-quarto-table-cell-role="th">employment</th>
+<th data-quarto-table-cell-role="th">installment_commitment</th>
+<th data-quarto-table-cell-role="th">personal_status</th>
+<th data-quarto-table-cell-role="th">other_parties</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">X_3</th>
+<th data-quarto-table-cell-role="th">X_4</th>
+<th data-quarto-table-cell-role="th">X_5</th>
+<th data-quarto-table-cell-role="th">X_6</th>
+<th data-quarto-table-cell-role="th">X_7</th>
+<th data-quarto-table-cell-role="th">X_8</th>
+<th data-quarto-table-cell-role="th">X_9</th>
+<th data-quarto-table-cell-role="th">X_10</th>
+<th data-quarto-table-cell-role="th">X_11</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0&lt;=X&lt;200</td>
+<td>30</td>
+<td>all paid</td>
+<td>furniture/equipment</td>
+<td>3496.0</td>
+<td>&gt;=1000</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.449680</td>
+<td>4.055515</td>
+<td>0.001283</td>
+<td>0.191197</td>
+<td>0.449680</td>
+<td>0.305551</td>
+<td>0.750874</td>
+<td>0.765611</td>
+<td>0.623008</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>no checking</td>
+<td>42</td>
+<td>existing paid</td>
+<td>radio/tv</td>
+<td>7166.0</td>
+<td>no known savings</td>
+<td>4&lt;=X&lt;7</td>
+<td>2</td>
+<td>male mar/wid</td>
+<td>none</td>
+<td>...</td>
+<td>0.623008</td>
+<td>4.962082</td>
+<td>0.396208</td>
+<td>0.525043</td>
+<td>0.378336</td>
+<td>0.887402</td>
+<td>0.342156</td>
+<td>0.938944</td>
+<td>0.266451</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>no checking</td>
+<td>18</td>
+<td>existing paid</td>
+<td>furniture/equipment</td>
+<td>1984.0</td>
+<td>&lt;100</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.887402</td>
+<td>4.421564</td>
+<td>0.818652</td>
+<td>0.508065</td>
+<td>0.898812</td>
+<td>0.255605</td>
+<td>0.319191</td>
+<td>0.535321</td>
+<td>0.444986</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>no checking</td>
+<td>48</td>
+<td>critical/other existing credit</td>
+<td>radio/tv</td>
+<td>3578.0</td>
+<td>no known savings</td>
+<td>&gt;=7</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.818652</td>
+<td>6.080646</td>
+<td>0.445092</td>
+<td>0.974743</td>
+<td>0.433125</td>
+<td>0.009822</td>
+<td>0.782929</td>
+<td>0.231668</td>
+<td>0.204295</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0&lt;=X&lt;200</td>
+<td>30</td>
+<td>existing paid</td>
+<td>furniture/equipment</td>
+<td>3441.0</td>
+<td>100&lt;=X&lt;500</td>
+<td>1&lt;=X&lt;4</td>
+<td>2</td>
+<td>female div/dep/mar</td>
+<td>co applicant</td>
+<td>...</td>
+<td>0.319191</td>
+<td>6.353212</td>
+<td>0.078052</td>
+<td>0.104358</td>
+<td>0.348942</td>
+<td>0.513697</td>
+<td>0.839659</td>
+<td>0.362052</td>
+<td>0.639795</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 33 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dataset.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">checking_status</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">credit_history</th>
+<th data-quarto-table-cell-role="th">purpose</th>
+<th data-quarto-table-cell-role="th">credit_amount</th>
+<th data-quarto-table-cell-role="th">savings_status</th>
+<th data-quarto-table-cell-role="th">employment</th>
+<th data-quarto-table-cell-role="th">installment_commitment</th>
+<th data-quarto-table-cell-role="th">personal_status</th>
+<th data-quarto-table-cell-role="th">other_parties</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">X_3</th>
+<th data-quarto-table-cell-role="th">X_4</th>
+<th data-quarto-table-cell-role="th">X_5</th>
+<th data-quarto-table-cell-role="th">X_6</th>
+<th data-quarto-table-cell-role="th">X_7</th>
+<th data-quarto-table-cell-role="th">X_8</th>
+<th data-quarto-table-cell-role="th">X_9</th>
+<th data-quarto-table-cell-role="th">X_10</th>
+<th data-quarto-table-cell-role="th">X_11</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">95</td>
+<td>&lt;0</td>
+<td>21</td>
+<td>existing paid</td>
+<td>radio/tv</td>
+<td>3357.0</td>
+<td>&gt;=1000</td>
+<td>&lt;1</td>
+<td>4</td>
+<td>female div/dep/mar</td>
+<td>none</td>
+<td>...</td>
+<td>0.704786</td>
+<td>9.055882</td>
+<td>0.251842</td>
+<td>0.819549</td>
+<td>0.570158</td>
+<td>0.032123</td>
+<td>0.696498</td>
+<td>0.128948</td>
+<td>0.518239</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">96</td>
+<td>0&lt;=X&lt;200</td>
+<td>48</td>
+<td>existing paid</td>
+<td>business</td>
+<td>15672.0</td>
+<td>&lt;100</td>
+<td>1&lt;=X&lt;4</td>
+<td>2</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.904431</td>
+<td>10.943433</td>
+<td>0.451728</td>
+<td>0.000663</td>
+<td>0.604347</td>
+<td>0.358375</td>
+<td>0.631918</td>
+<td>0.643766</td>
+<td>0.236234</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">97</td>
+<td>no checking</td>
+<td>18</td>
+<td>no credits/all paid</td>
+<td>business</td>
+<td>4165.0</td>
+<td>&lt;100</td>
+<td>1&lt;=X&lt;4</td>
+<td>2</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.860020</td>
+<td>6.390870</td>
+<td>0.472297</td>
+<td>0.779964</td>
+<td>0.361786</td>
+<td>0.540792</td>
+<td>0.214544</td>
+<td>0.121344</td>
+<td>0.321645</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">98</td>
+<td>0&lt;=X&lt;200</td>
+<td>18</td>
+<td>existing paid</td>
+<td>radio/tv</td>
+<td>866.0</td>
+<td>&lt;100</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male mar/wid</td>
+<td>guarantor</td>
+<td>...</td>
+<td>0.962390</td>
+<td>5.361072</td>
+<td>0.002516</td>
+<td>0.393992</td>
+<td>0.727615</td>
+<td>0.622296</td>
+<td>0.885649</td>
+<td>0.742421</td>
+<td>0.848507</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">99</td>
+<td>no checking</td>
+<td>15</td>
+<td>existing paid</td>
+<td>new car</td>
+<td>3556.0</td>
+<td>no known savings</td>
+<td>1&lt;=X&lt;4</td>
+<td>3</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.855776</td>
+<td>9.153881</td>
+<td>0.210242</td>
+<td>0.138922</td>
+<td>0.579422</td>
+<td>0.931523</td>
+<td>0.437831</td>
+<td>0.476623</td>
+<td>0.463503</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 33 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dataset.iloc[:, <span class="dv">15</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">existing_credits</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">num_dependents</th>
+<th data-quarto-table-cell-role="th">own_telephone</th>
+<th data-quarto-table-cell-role="th">foreign_worker</th>
+<th data-quarto-table-cell-role="th">health_status</th>
+<th data-quarto-table-cell-role="th">X_1</th>
+<th data-quarto-table-cell-role="th">X_2</th>
+<th data-quarto-table-cell-role="th">X_3</th>
+<th data-quarto-table-cell-role="th">X_4</th>
+<th data-quarto-table-cell-role="th">X_5</th>
+<th data-quarto-table-cell-role="th">X_6</th>
+<th data-quarto-table-cell-role="th">X_7</th>
+<th data-quarto-table-cell-role="th">X_8</th>
+<th data-quarto-table-cell-role="th">X_9</th>
+<th data-quarto-table-cell-role="th">X_10</th>
+<th data-quarto-table-cell-role="th">X_11</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>skilled</td>
+<td>2</td>
+<td>yes</td>
+<td>yes</td>
+<td>good</td>
+<td>0.128286</td>
+<td>438.008662</td>
+<td>0.449680</td>
+<td>4.055515</td>
+<td>0.001283</td>
+<td>0.191197</td>
+<td>0.449680</td>
+<td>0.305551</td>
+<td>0.750874</td>
+<td>0.765611</td>
+<td>0.623008</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>skilled</td>
+<td>1</td>
+<td>yes</td>
+<td>yes</td>
+<td>good</td>
+<td>75.087356</td>
+<td>1376.386609</td>
+<td>0.623008</td>
+<td>4.962082</td>
+<td>0.396208</td>
+<td>0.525043</td>
+<td>0.378336</td>
+<td>0.887402</td>
+<td>0.342156</td>
+<td>0.938944</td>
+<td>0.266451</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>skilled</td>
+<td>1</td>
+<td>none</td>
+<td>yes</td>
+<td>good</td>
+<td>52.504339</td>
+<td>743.723831</td>
+<td>0.887402</td>
+<td>4.421564</td>
+<td>0.818652</td>
+<td>0.508065</td>
+<td>0.898812</td>
+<td>0.255605</td>
+<td>0.319191</td>
+<td>0.535321</td>
+<td>0.444986</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>skilled</td>
+<td>1</td>
+<td>yes</td>
+<td>yes</td>
+<td>good</td>
+<td>93.894398</td>
+<td>560.945074</td>
+<td>0.818652</td>
+<td>6.080646</td>
+<td>0.445092</td>
+<td>0.974743</td>
+<td>0.433125</td>
+<td>0.009822</td>
+<td>0.782929</td>
+<td>0.231668</td>
+<td>0.204295</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>skilled</td>
+<td>1</td>
+<td>none</td>
+<td>yes</td>
+<td>bad</td>
+<td>89.881196</td>
+<td>543.226975</td>
+<td>0.319191</td>
+<td>6.353212</td>
+<td>0.078052</td>
+<td>0.104358</td>
+<td>0.348942</td>
+<td>0.513697</td>
+<td>0.839659</td>
+<td>0.362052</td>
+<td>0.639795</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">95</td>
+<td>1</td>
+<td>skilled</td>
+<td>1</td>
+<td>none</td>
+<td>yes</td>
+<td>good</td>
+<td>74.422947</td>
+<td>129.154017</td>
+<td>0.704786</td>
+<td>9.055882</td>
+<td>0.251842</td>
+<td>0.819549</td>
+<td>0.570158</td>
+<td>0.032123</td>
+<td>0.696498</td>
+<td>0.128948</td>
+<td>0.518239</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">96</td>
+<td>1</td>
+<td>skilled</td>
+<td>1</td>
+<td>yes</td>
+<td>yes</td>
+<td>bad</td>
+<td>79.026707</td>
+<td>635.232180</td>
+<td>0.904431</td>
+<td>10.943433</td>
+<td>0.451728</td>
+<td>0.000663</td>
+<td>0.604347</td>
+<td>0.358375</td>
+<td>0.631918</td>
+<td>0.643766</td>
+<td>0.236234</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">97</td>
+<td>2</td>
+<td>skilled</td>
+<td>2</td>
+<td>none</td>
+<td>yes</td>
+<td>bad</td>
+<td>8.724162</td>
+<td>1367.639046</td>
+<td>0.860020</td>
+<td>6.390870</td>
+<td>0.472297</td>
+<td>0.779964</td>
+<td>0.361786</td>
+<td>0.540792</td>
+<td>0.214544</td>
+<td>0.121344</td>
+<td>0.321645</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">98</td>
+<td>1</td>
+<td>unskilled resident</td>
+<td>1</td>
+<td>none</td>
+<td>yes</td>
+<td>good</td>
+<td>46.213947</td>
+<td>532.833807</td>
+<td>0.962390</td>
+<td>5.361072</td>
+<td>0.002516</td>
+<td>0.393992</td>
+<td>0.727615</td>
+<td>0.622296</td>
+<td>0.885649</td>
+<td>0.742421</td>
+<td>0.848507</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">99</td>
+<td>1</td>
+<td>skilled</td>
+<td>1</td>
+<td>none</td>
+<td>yes</td>
+<td>good</td>
+<td>85.447035</td>
+<td>1392.359773</td>
+<td>0.855776</td>
+<td>9.153881</td>
+<td>0.210242</td>
+<td>0.138922</td>
+<td>0.579422</td>
+<td>0.931523</td>
+<td>0.437831</td>
+<td>0.476623</td>
+<td>0.463503</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>100 rows × 18 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(dataset), dataset.columns, dataset.dtypes, dataset.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-bold">(</span>
+    <span class="ansi-bold">&lt;</span><span class="ansi-bright-magenta-fg ansi-bold">class</span> <span class="ansi-green-fg">'pandas.core.frame.DataFrame'</span><span class="ansi-bold">&gt;</span>,
+    <span class="ansi-magenta-fg ansi-bold">Index</span><span class="ansi-bold">(</span><span class="ansi-bold">[</span><span class="ansi-green-fg">'checking_status'</span>, <span class="ansi-green-fg">'duration'</span>, <span class="ansi-green-fg">'credit_history'</span>, <span class="ansi-green-fg">'purpose'</span>,
+       <span class="ansi-green-fg">'credit_amount'</span>, <span class="ansi-green-fg">'savings_status'</span>, <span class="ansi-green-fg">'employment'</span>,
+       <span class="ansi-green-fg">'installment_commitment'</span>, <span class="ansi-green-fg">'personal_status'</span>, <span class="ansi-green-fg">'other_parties'</span>,
+       <span class="ansi-green-fg">'residence_since'</span>, <span class="ansi-green-fg">'property_magnitude'</span>, <span class="ansi-green-fg">'age'</span>, <span class="ansi-green-fg">'other_payment_plans'</span>,
+       <span class="ansi-green-fg">'housing'</span>, <span class="ansi-green-fg">'existing_credits'</span>, <span class="ansi-green-fg">'job'</span>, <span class="ansi-green-fg">'num_dependents'</span>, <span class="ansi-green-fg">'own_telephone'</span>,
+       <span class="ansi-green-fg">'foreign_worker'</span>, <span class="ansi-green-fg">'health_status'</span>, <span class="ansi-green-fg">'X_1'</span>, <span class="ansi-green-fg">'X_2'</span>, <span class="ansi-green-fg">'X_3'</span>, <span class="ansi-green-fg">'X_4'</span>, <span class="ansi-green-fg">'X_5'</span>,
+       <span class="ansi-green-fg">'X_6'</span>, <span class="ansi-green-fg">'X_7'</span>, <span class="ansi-green-fg">'X_8'</span>, <span class="ansi-green-fg">'X_9'</span>, <span class="ansi-green-fg">'X_10'</span>, <span class="ansi-green-fg">'X_11'</span>, <span class="ansi-green-fg">'y'</span><span class="ansi-bold">]</span>,
+      <span class="ansi-yellow-fg">dtype</span>=<span class="ansi-green-fg">'object'</span><span class="ansi-bold">)</span>,
+    checking_status            object
+duration                    int64
+credit_history             object
+purpose                    object
+credit_amount             float64
+savings_status             object
+employment                 object
+installment_commitment      int64
+personal_status            object
+other_parties              object
+residence_since             int64
+property_magnitude         object
+age                         int64
+other_payment_plans        object
+housing                    object
+existing_credits            int64
+job                        object
+num_dependents              int64
+own_telephone              object
+foreign_worker             object
+health_status              object
+X_1                       float64
+X_2                       float64
+X_3                       float64
+X_4                       float64
+X_5                       float64
+X_6                       float64
+X_7                       float64
+X_8                       float64
+X_9                       float64
+X_10                      float64
+X_11                      float64
+y                            bool
+dtype: object,
+    <span class="ansi-bold">(</span><span class="ansi-cyan-fg ansi-bold">100</span>, <span class="ansi-cyan-fg ansi-bold">33</span><span class="ansi-bold">)</span>
+<span class="ansi-bold">)</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dataset.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="ansi-escaped-output">
+<pre>checking_status           <span class="ansi-cyan-fg ansi-bold">0</span>
+duration                  <span class="ansi-cyan-fg ansi-bold">0</span>
+credit_history            <span class="ansi-cyan-fg ansi-bold">0</span>
+purpose                   <span class="ansi-cyan-fg ansi-bold">0</span>
+credit_amount             <span class="ansi-cyan-fg ansi-bold">0</span>
+savings_status            <span class="ansi-cyan-fg ansi-bold">0</span>
+employment                <span class="ansi-cyan-fg ansi-bold">0</span>
+installment_commitment    <span class="ansi-cyan-fg ansi-bold">0</span>
+personal_status           <span class="ansi-cyan-fg ansi-bold">0</span>
+other_parties             <span class="ansi-cyan-fg ansi-bold">0</span>
+residence_since           <span class="ansi-cyan-fg ansi-bold">0</span>
+property_magnitude        <span class="ansi-cyan-fg ansi-bold">0</span>
+age                       <span class="ansi-cyan-fg ansi-bold">0</span>
+other_payment_plans       <span class="ansi-cyan-fg ansi-bold">0</span>
+housing                   <span class="ansi-cyan-fg ansi-bold">0</span>
+existing_credits          <span class="ansi-cyan-fg ansi-bold">0</span>
+job                       <span class="ansi-cyan-fg ansi-bold">0</span>
+num_dependents            <span class="ansi-cyan-fg ansi-bold">0</span>
+own_telephone             <span class="ansi-cyan-fg ansi-bold">0</span>
+foreign_worker            <span class="ansi-cyan-fg ansi-bold">0</span>
+health_status             <span class="ansi-cyan-fg ansi-bold">0</span>
+X_1                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_2                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_3                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_4                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_5                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_6                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_7                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_8                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_9                       <span class="ansi-cyan-fg ansi-bold">0</span>
+X_10                      <span class="ansi-cyan-fg ansi-bold">0</span>
+X_11                      <span class="ansi-cyan-fg ansi-bold">0</span>
+y                         <span class="ansi-cyan-fg ansi-bold">0</span>
+dtype: int64</pre>
+</div>
+</div>
+</div>
+<div id="cell-12" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract numerical values from status columns, similar to checking and savings</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_min_value(status):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extracting the lowest number from the string, handling cases like 'no checking'</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> pd.to_numeric(status.<span class="bu">str</span>.extract(<span class="vs">r'(\d+)'</span>)[<span class="dv">0</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    num.fillna(<span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)  <span class="co"># Replace missing values with 0 for 'no checking'/'no known savings'</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> num</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-13" class="cell" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to 'checking_status', 'savings_status', and 'employment'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'checking_min'</span>] <span class="op">=</span> extract_min_value(dataset[<span class="st">'checking_status'</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'savings_min'</span>] <span class="op">=</span> extract_min_value(dataset[<span class="st">'savings_status'</span>])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'employment_min'</span>] <span class="op">=</span> extract_min_value(dataset[<span class="st">'employment'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create bins for checking_status, savings_status, and employment</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>checking_bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>savings_bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>employment_bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust labels to match the number of bins - 1</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>checking_labels <span class="op">=</span> [<span class="st">'No Checking'</span>, <span class="st">'0-200'</span>, <span class="st">'200-500'</span>, <span class="st">'500-1000'</span>, <span class="st">'&gt;1000'</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>savings_labels <span class="op">=</span> [<span class="st">'No Savings'</span>, <span class="st">'0-100'</span>, <span class="st">'100-500'</span>, <span class="st">'500-1000'</span>, <span class="st">'&gt;1000'</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#employment_labels = ['Unemployed', '1&lt;=X&lt;4', '4&lt;=X&lt;7', '&gt;=7']</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>employment_labels <span class="op">=</span> [<span class="st">'Unemployed'</span>, <span class="st">'1-4'</span>, <span class="st">'4-7'</span>, <span class="st">'&gt;7'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin the values using pd.cut()</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'checking_status_binned'</span>] <span class="op">=</span> pd.cut(dataset[<span class="st">'checking_min'</span>], bins<span class="op">=</span>checking_bins, labels<span class="op">=</span>checking_labels[:<span class="op">-</span><span class="dv">1</span>], right<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'savings_status_binned'</span>] <span class="op">=</span> pd.cut(dataset[<span class="st">'savings_min'</span>], bins<span class="op">=</span>savings_bins, labels<span class="op">=</span>savings_labels[:<span class="op">-</span><span class="dv">1</span>], right<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'employment_binned'</span>] <span class="op">=</span> pd.cut(dataset[<span class="st">'employment_min'</span>], bins<span class="op">=</span>employment_bins, labels<span class="op">=</span>employment_labels, right<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the results</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dataset[[<span class="st">'employment_min'</span>, <span class="st">'employment_binned'</span>, <span class="st">'employment'</span>]].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   employment_min employment_binned employment
+0             1.0               1-4     1&lt;=X&lt;4
+1             4.0               4-7     4&lt;=X&lt;7
+2             1.0               1-4     1&lt;=X&lt;4
+3             7.0                &gt;7        &gt;=7
+4             1.0               1-4     1&lt;=X&lt;4</code></pre>
+</div>
+</div>
+<div id="cell-18" class="cell" data-execution_count="73">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dataset[[<span class="st">'savings_min'</span>, <span class="st">'savings_status_binned'</span>, <span class="st">'savings_status'</span>]].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   savings_min savings_status_binned    savings_status
+0       1000.0              500-1000            &gt;=1000
+1          0.0            No Savings  no known savings
+2        100.0                 0-100              &lt;100
+3          0.0            No Savings  no known savings
+4        100.0                 0-100        100&lt;=X&lt;500</code></pre>
+</div>
+</div>
+<div id="cell-19" class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dataset[[<span class="st">'checking_min'</span>, <span class="st">'checking_status_binned'</span>, <span class="st">'checking_status'</span>]].head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   checking_min checking_status_binned checking_status
+0           0.0            No Checking        0&lt;=X&lt;200
+1           0.0            No Checking     no checking
+2           0.0            No Checking     no checking
+3           0.0            No Checking     no checking
+4           0.0            No Checking        0&lt;=X&lt;200
+5           0.0            No Checking     no checking
+6           0.0            No Checking              &lt;0
+7         200.0                  0-200           &gt;=200
+8           0.0            No Checking              &lt;0
+9           0.0            No Checking     no checking</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze how many entries fall into each bin</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>checking_status_counts <span class="op">=</span> dataset[<span class="st">'checking_status_binned'</span>].value_counts()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>savings_status_counts <span class="op">=</span> dataset[<span class="st">'savings_status_binned'</span>].value_counts()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>employment_counts <span class="op">=</span> dataset[<span class="st">'employment_binned'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the results</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>checking_status_counts, savings_status_counts, employment_counts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="76">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-bold">(</span>
+    checking_status_binned
+No Checking    <span class="ansi-cyan-fg ansi-bold">93</span>
+<span class="ansi-cyan-fg ansi-bold">0</span>-<span class="ansi-cyan-fg ansi-bold">200</span>           <span class="ansi-cyan-fg ansi-bold">7</span>
+<span class="ansi-cyan-fg ansi-bold">200</span>-<span class="ansi-cyan-fg ansi-bold">500</span>         <span class="ansi-cyan-fg ansi-bold">0</span>
+<span class="ansi-cyan-fg ansi-bold">500</span>-<span class="ansi-cyan-fg ansi-bold">1000</span>        <span class="ansi-cyan-fg ansi-bold">0</span>
+Name: count, dtype: int64,
+    savings_status_binned
+<span class="ansi-cyan-fg ansi-bold">0</span>-<span class="ansi-cyan-fg ansi-bold">100</span>         <span class="ansi-cyan-fg ansi-bold">68</span>
+No Savings    <span class="ansi-cyan-fg ansi-bold">17</span>
+<span class="ansi-cyan-fg ansi-bold">100</span>-<span class="ansi-cyan-fg ansi-bold">500</span>        <span class="ansi-cyan-fg ansi-bold">8</span>
+<span class="ansi-cyan-fg ansi-bold">500</span>-<span class="ansi-cyan-fg ansi-bold">1000</span>       <span class="ansi-cyan-fg ansi-bold">7</span>
+Name: count, dtype: int64,
+    employment_binned
+<span class="ansi-cyan-fg ansi-bold">1</span>-<span class="ansi-cyan-fg ansi-bold">4</span>           <span class="ansi-cyan-fg ansi-bold">49</span>
+&gt;<span class="ansi-cyan-fg ansi-bold">7</span>            <span class="ansi-cyan-fg ansi-bold">30</span>
+<span class="ansi-cyan-fg ansi-bold">4</span>-<span class="ansi-cyan-fg ansi-bold">7</span>           <span class="ansi-cyan-fg ansi-bold">15</span>
+Unemployed     <span class="ansi-cyan-fg ansi-bold">6</span>
+Name: count, dtype: int64
+<span class="ansi-bold">)</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dataset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="77">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">checking_status</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">credit_history</th>
+<th data-quarto-table-cell-role="th">purpose</th>
+<th data-quarto-table-cell-role="th">credit_amount</th>
+<th data-quarto-table-cell-role="th">savings_status</th>
+<th data-quarto-table-cell-role="th">employment</th>
+<th data-quarto-table-cell-role="th">installment_commitment</th>
+<th data-quarto-table-cell-role="th">personal_status</th>
+<th data-quarto-table-cell-role="th">other_parties</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">X_9</th>
+<th data-quarto-table-cell-role="th">X_10</th>
+<th data-quarto-table-cell-role="th">X_11</th>
+<th data-quarto-table-cell-role="th">y</th>
+<th data-quarto-table-cell-role="th">checking_min</th>
+<th data-quarto-table-cell-role="th">savings_min</th>
+<th data-quarto-table-cell-role="th">employment_min</th>
+<th data-quarto-table-cell-role="th">checking_status_binned</th>
+<th data-quarto-table-cell-role="th">savings_status_binned</th>
+<th data-quarto-table-cell-role="th">employment_binned</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0&lt;=X&lt;200</td>
+<td>30</td>
+<td>all paid</td>
+<td>furniture/equipment</td>
+<td>3496.0</td>
+<td>&gt;=1000</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.750874</td>
+<td>0.765611</td>
+<td>0.623008</td>
+<td>False</td>
+<td>0.0</td>
+<td>1000.0</td>
+<td>1.0</td>
+<td>No Checking</td>
+<td>500-1000</td>
+<td>1-4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>no checking</td>
+<td>42</td>
+<td>existing paid</td>
+<td>radio/tv</td>
+<td>7166.0</td>
+<td>no known savings</td>
+<td>4&lt;=X&lt;7</td>
+<td>2</td>
+<td>male mar/wid</td>
+<td>none</td>
+<td>...</td>
+<td>0.342156</td>
+<td>0.938944</td>
+<td>0.266451</td>
+<td>True</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>4.0</td>
+<td>No Checking</td>
+<td>No Savings</td>
+<td>4-7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>no checking</td>
+<td>18</td>
+<td>existing paid</td>
+<td>furniture/equipment</td>
+<td>1984.0</td>
+<td>&lt;100</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.319191</td>
+<td>0.535321</td>
+<td>0.444986</td>
+<td>True</td>
+<td>0.0</td>
+<td>100.0</td>
+<td>1.0</td>
+<td>No Checking</td>
+<td>0-100</td>
+<td>1-4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>no checking</td>
+<td>48</td>
+<td>critical/other existing credit</td>
+<td>radio/tv</td>
+<td>3578.0</td>
+<td>no known savings</td>
+<td>&gt;=7</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.782929</td>
+<td>0.231668</td>
+<td>0.204295</td>
+<td>True</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>7.0</td>
+<td>No Checking</td>
+<td>No Savings</td>
+<td>&gt;7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0&lt;=X&lt;200</td>
+<td>30</td>
+<td>existing paid</td>
+<td>furniture/equipment</td>
+<td>3441.0</td>
+<td>100&lt;=X&lt;500</td>
+<td>1&lt;=X&lt;4</td>
+<td>2</td>
+<td>female div/dep/mar</td>
+<td>co applicant</td>
+<td>...</td>
+<td>0.839659</td>
+<td>0.362052</td>
+<td>0.639795</td>
+<td>False</td>
+<td>0.0</td>
+<td>100.0</td>
+<td>1.0</td>
+<td>No Checking</td>
+<td>0-100</td>
+<td>1-4</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 39 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="131">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> catalog.load(<span class="st">"dataset_id_742"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dataset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">[09/24/24 14:49:20] </span><span style="color: #000080; text-decoration-color: #000080">INFO    </span> Loading data from dataset_id_742 <span style="font-weight: bold">(</span>CSVDataset<span style="font-weight: bold">)</span><span style="color: #808000; text-decoration-color: #808000">...</span>                   <a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\io\data_catalog.py" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">data_catalog.py</span></a><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">:</span><a href="file://c:\Users\Admin\Downloads\AI-839\MLOps\kedro-projects\.venv\lib\site-packages\kedro\io\data_catalog.py#537" target="_blank"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">537</span></a>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="131">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">checking_status</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">credit_history</th>
+<th data-quarto-table-cell-role="th">purpose</th>
+<th data-quarto-table-cell-role="th">credit_amount</th>
+<th data-quarto-table-cell-role="th">savings_status</th>
+<th data-quarto-table-cell-role="th">employment</th>
+<th data-quarto-table-cell-role="th">installment_commitment</th>
+<th data-quarto-table-cell-role="th">personal_status</th>
+<th data-quarto-table-cell-role="th">other_parties</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">X_3</th>
+<th data-quarto-table-cell-role="th">X_4</th>
+<th data-quarto-table-cell-role="th">X_5</th>
+<th data-quarto-table-cell-role="th">X_6</th>
+<th data-quarto-table-cell-role="th">X_7</th>
+<th data-quarto-table-cell-role="th">X_8</th>
+<th data-quarto-table-cell-role="th">X_9</th>
+<th data-quarto-table-cell-role="th">X_10</th>
+<th data-quarto-table-cell-role="th">X_11</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0&lt;=X&lt;200</td>
+<td>30</td>
+<td>all paid</td>
+<td>furniture/equipment</td>
+<td>3496.0</td>
+<td>&gt;=1000</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.449680</td>
+<td>4.055515</td>
+<td>0.001283</td>
+<td>0.191197</td>
+<td>0.449680</td>
+<td>0.305551</td>
+<td>0.750874</td>
+<td>0.765611</td>
+<td>0.623008</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>no checking</td>
+<td>42</td>
+<td>existing paid</td>
+<td>radio/tv</td>
+<td>7166.0</td>
+<td>no known savings</td>
+<td>4&lt;=X&lt;7</td>
+<td>2</td>
+<td>male mar/wid</td>
+<td>none</td>
+<td>...</td>
+<td>0.623008</td>
+<td>4.962082</td>
+<td>0.396208</td>
+<td>0.525043</td>
+<td>0.378336</td>
+<td>0.887402</td>
+<td>0.342156</td>
+<td>0.938944</td>
+<td>0.266451</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>no checking</td>
+<td>18</td>
+<td>existing paid</td>
+<td>furniture/equipment</td>
+<td>1984.0</td>
+<td>&lt;100</td>
+<td>1&lt;=X&lt;4</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.887402</td>
+<td>4.421564</td>
+<td>0.818652</td>
+<td>0.508065</td>
+<td>0.898812</td>
+<td>0.255605</td>
+<td>0.319191</td>
+<td>0.535321</td>
+<td>0.444986</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>no checking</td>
+<td>48</td>
+<td>critical/other existing credit</td>
+<td>radio/tv</td>
+<td>3578.0</td>
+<td>no known savings</td>
+<td>&gt;=7</td>
+<td>4</td>
+<td>male single</td>
+<td>none</td>
+<td>...</td>
+<td>0.818652</td>
+<td>6.080646</td>
+<td>0.445092</td>
+<td>0.974743</td>
+<td>0.433125</td>
+<td>0.009822</td>
+<td>0.782929</td>
+<td>0.231668</td>
+<td>0.204295</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0&lt;=X&lt;200</td>
+<td>30</td>
+<td>existing paid</td>
+<td>furniture/equipment</td>
+<td>3441.0</td>
+<td>100&lt;=X&lt;500</td>
+<td>1&lt;=X&lt;4</td>
+<td>2</td>
+<td>female div/dep/mar</td>
+<td>co applicant</td>
+<td>...</td>
+<td>0.319191</td>
+<td>6.353212</td>
+<td>0.078052</td>
+<td>0.104358</td>
+<td>0.348942</td>
+<td>0.513697</td>
+<td>0.839659</td>
+<td>0.362052</td>
+<td>0.639795</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 33 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="145">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> dataset.copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="146">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 100 entries, 0 to 99
+Data columns (total 33 columns):
+ #   Column                  Non-Null Count  Dtype  
+---  ------                  --------------  -----  
+ 0   checking_status         100 non-null    object 
+ 1   duration                100 non-null    int64  
+ 2   credit_history          100 non-null    object 
+ 3   purpose                 100 non-null    object 
+ 4   credit_amount           100 non-null    float64
+ 5   savings_status          100 non-null    object 
+ 6   employment              100 non-null    object 
+ 7   installment_commitment  100 non-null    int64  
+ 8   personal_status         100 non-null    object 
+ 9   other_parties           100 non-null    object 
+ 10  residence_since         100 non-null    int64  
+ 11  property_magnitude      100 non-null    object 
+ 12  age                     100 non-null    int64  
+ 13  other_payment_plans     100 non-null    object 
+ 14  housing                 100 non-null    object 
+ 15  existing_credits        100 non-null    int64  
+ 16  job                     100 non-null    object 
+ 17  num_dependents          100 non-null    int64  
+ 18  own_telephone           100 non-null    object 
+ 19  foreign_worker          100 non-null    object 
+ 20  health_status           100 non-null    object 
+ 21  X_1                     100 non-null    float64
+ 22  X_2                     100 non-null    float64
+ 23  X_3                     100 non-null    float64
+ 24  X_4                     100 non-null    float64
+ 25  X_5                     100 non-null    float64
+ 26  X_6                     100 non-null    float64
+ 27  X_7                     100 non-null    float64
+ 28  X_8                     100 non-null    float64
+ 29  X_9                     100 non-null    float64
+ 30  X_10                    100 non-null    float64
+ 31  X_11                    100 non-null    float64
+ 32  y                       100 non-null    bool   
+dtypes: bool(1), float64(12), int64(6), object(14)
+memory usage: 25.2+ KB</code></pre>
+</div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="147">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="147">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-magenta-fg ansi-bold">Index</span><span class="ansi-bold">(</span><span class="ansi-bold">[</span><span class="ansi-green-fg">'checking_status'</span>, <span class="ansi-green-fg">'duration'</span>, <span class="ansi-green-fg">'credit_history'</span>, <span class="ansi-green-fg">'purpose'</span>,
+       <span class="ansi-green-fg">'credit_amount'</span>, <span class="ansi-green-fg">'savings_status'</span>, <span class="ansi-green-fg">'employment'</span>,
+       <span class="ansi-green-fg">'installment_commitment'</span>, <span class="ansi-green-fg">'personal_status'</span>, <span class="ansi-green-fg">'other_parties'</span>,
+       <span class="ansi-green-fg">'residence_since'</span>, <span class="ansi-green-fg">'property_magnitude'</span>, <span class="ansi-green-fg">'age'</span>, <span class="ansi-green-fg">'other_payment_plans'</span>,
+       <span class="ansi-green-fg">'housing'</span>, <span class="ansi-green-fg">'existing_credits'</span>, <span class="ansi-green-fg">'job'</span>, <span class="ansi-green-fg">'num_dependents'</span>, <span class="ansi-green-fg">'own_telephone'</span>,
+       <span class="ansi-green-fg">'foreign_worker'</span>, <span class="ansi-green-fg">'health_status'</span>, <span class="ansi-green-fg">'X_1'</span>, <span class="ansi-green-fg">'X_2'</span>, <span class="ansi-green-fg">'X_3'</span>, <span class="ansi-green-fg">'X_4'</span>, <span class="ansi-green-fg">'X_5'</span>,
+       <span class="ansi-green-fg">'X_6'</span>, <span class="ansi-green-fg">'X_7'</span>, <span class="ansi-green-fg">'X_8'</span>, <span class="ansi-green-fg">'X_9'</span>, <span class="ansi-green-fg">'X_10'</span>, <span class="ansi-green-fg">'X_11'</span>, <span class="ansi-green-fg">'y'</span><span class="ansi-bold">]</span>,
+      <span class="ansi-yellow-fg">dtype</span>=<span class="ansi-green-fg">'object'</span><span class="ansi-bold">)</span></pre>
+</div>
+</div>
+</div>
+<div id="cell-29" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># columns_to_drop = ['checking_status', 'checking_min', 'savings_status', 'savings_min', 'employment', 'employment_min']  # Replace with actual columns</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df.drop(columns=columns_to_drop, axis=1, inplace=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-30" class="cell" data-execution_count="148">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encode categorical columns</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>df_encoded <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>[</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'checking_status'</span>, <span class="st">'credit_history'</span>, <span class="st">'purpose'</span>, <span class="st">'savings_status'</span>, </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'employment'</span>, <span class="st">'personal_status'</span>, <span class="st">'other_parties'</span>, <span class="st">'property_magnitude'</span>, </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'other_payment_plans'</span>, <span class="st">'housing'</span>, <span class="st">'job'</span>, <span class="st">'own_telephone'</span>, <span class="st">'foreign_worker'</span>, </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'health_status'</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-31" class="cell" data-execution_count="149">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_encoded</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="149">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">credit_amount</th>
+<th data-quarto-table-cell-role="th">installment_commitment</th>
+<th data-quarto-table-cell-role="th">residence_since</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">existing_credits</th>
+<th data-quarto-table-cell-role="th">num_dependents</th>
+<th data-quarto-table-cell-role="th">X_1</th>
+<th data-quarto-table-cell-role="th">X_2</th>
+<th data-quarto-table-cell-role="th">X_3</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">job_high qualif/self emp/mgmt</th>
+<th data-quarto-table-cell-role="th">job_skilled</th>
+<th data-quarto-table-cell-role="th">job_unemp/unskilled non res</th>
+<th data-quarto-table-cell-role="th">job_unskilled resident</th>
+<th data-quarto-table-cell-role="th">own_telephone_none</th>
+<th data-quarto-table-cell-role="th">own_telephone_yes</th>
+<th data-quarto-table-cell-role="th">foreign_worker_no</th>
+<th data-quarto-table-cell-role="th">foreign_worker_yes</th>
+<th data-quarto-table-cell-role="th">health_status_bad</th>
+<th data-quarto-table-cell-role="th">health_status_good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>30</td>
+<td>3496.0</td>
+<td>4</td>
+<td>2</td>
+<td>34</td>
+<td>1</td>
+<td>2</td>
+<td>0.128286</td>
+<td>438.008662</td>
+<td>0.449680</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>42</td>
+<td>7166.0</td>
+<td>2</td>
+<td>4</td>
+<td>29</td>
+<td>1</td>
+<td>1</td>
+<td>75.087356</td>
+<td>1376.386609</td>
+<td>0.623008</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>18</td>
+<td>1984.0</td>
+<td>4</td>
+<td>4</td>
+<td>47</td>
+<td>2</td>
+<td>1</td>
+<td>52.504339</td>
+<td>743.723831</td>
+<td>0.887402</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>48</td>
+<td>3578.0</td>
+<td>4</td>
+<td>1</td>
+<td>47</td>
+<td>1</td>
+<td>1</td>
+<td>93.894398</td>
+<td>560.945074</td>
+<td>0.818652</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>30</td>
+<td>3441.0</td>
+<td>2</td>
+<td>4</td>
+<td>21</td>
+<td>1</td>
+<td>1</td>
+<td>89.881196</td>
+<td>543.226975</td>
+<td>0.319191</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">95</td>
+<td>21</td>
+<td>3357.0</td>
+<td>4</td>
+<td>2</td>
+<td>29</td>
+<td>1</td>
+<td>1</td>
+<td>74.422947</td>
+<td>129.154017</td>
+<td>0.704786</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">96</td>
+<td>48</td>
+<td>15672.0</td>
+<td>2</td>
+<td>2</td>
+<td>23</td>
+<td>1</td>
+<td>1</td>
+<td>79.026707</td>
+<td>635.232180</td>
+<td>0.904431</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">97</td>
+<td>18</td>
+<td>4165.0</td>
+<td>2</td>
+<td>2</td>
+<td>36</td>
+<td>2</td>
+<td>2</td>
+<td>8.724162</td>
+<td>1367.639046</td>
+<td>0.860020</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">98</td>
+<td>18</td>
+<td>866.0</td>
+<td>4</td>
+<td>2</td>
+<td>25</td>
+<td>1</td>
+<td>1</td>
+<td>46.213947</td>
+<td>532.833807</td>
+<td>0.962390</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">99</td>
+<td>15</td>
+<td>3556.0</td>
+<td>3</td>
+<td>2</td>
+<td>29</td>
+<td>1</td>
+<td>1</td>
+<td>85.447035</td>
+<td>1392.359773</td>
+<td>0.855776</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>100 rows × 73 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-32" class="cell" data-execution_count="150">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>numerical_cols <span class="op">=</span> [<span class="st">'duration'</span>, <span class="st">'credit_amount'</span>, <span class="st">'age'</span>, <span class="st">'installment_commitment'</span>, <span class="st">'residence_since'</span>, </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'existing_credits'</span>, <span class="st">'num_dependents'</span>, <span class="st">'X_1'</span>, <span class="st">'X_2'</span>, <span class="st">'X_3'</span>, <span class="st">'X_4'</span>, <span class="st">'X_5'</span>, </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'X_6'</span>, <span class="st">'X_7'</span>, <span class="st">'X_8'</span>, <span class="st">'X_9'</span>, <span class="st">'X_10'</span>, <span class="st">'X_11'</span>]</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>df_encoded[numerical_cols] <span class="op">=</span> scaler.fit_transform(df_encoded[numerical_cols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-33" class="cell" data-execution_count="151">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df_encoded.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 100 entries, 0 to 99
+Data columns (total 73 columns):
+ #   Column                                         Non-Null Count  Dtype  
+---  ------                                         --------------  -----  
+ 0   duration                                       100 non-null    float64
+ 1   credit_amount                                  100 non-null    float64
+ 2   installment_commitment                         100 non-null    float64
+ 3   residence_since                                100 non-null    float64
+ 4   age                                            100 non-null    float64
+ 5   existing_credits                               100 non-null    float64
+ 6   num_dependents                                 100 non-null    float64
+ 7   X_1                                            100 non-null    float64
+ 8   X_2                                            100 non-null    float64
+ 9   X_3                                            100 non-null    float64
+ 10  X_4                                            100 non-null    float64
+ 11  X_5                                            100 non-null    float64
+ 12  X_6                                            100 non-null    float64
+ 13  X_7                                            100 non-null    float64
+ 14  X_8                                            100 non-null    float64
+ 15  X_9                                            100 non-null    float64
+ 16  X_10                                           100 non-null    float64
+ 17  X_11                                           100 non-null    float64
+ 18  y                                              100 non-null    bool   
+ 19  checking_status_0&lt;=X&lt;200                       100 non-null    bool   
+ 20  checking_status_&lt;0                             100 non-null    bool   
+ 21  checking_status_&gt;=200                          100 non-null    bool   
+ 22  checking_status_no checking                    100 non-null    bool   
+ 23  credit_history_all paid                        100 non-null    bool   
+ 24  credit_history_critical/other existing credit  100 non-null    bool   
+ 25  credit_history_delayed previously              100 non-null    bool   
+ 26  credit_history_existing paid                   100 non-null    bool   
+ 27  credit_history_no credits/all paid             100 non-null    bool   
+ 28  purpose_business                               100 non-null    bool   
+ 29  purpose_education                              100 non-null    bool   
+ 30  purpose_furniture/equipment                    100 non-null    bool   
+ 31  purpose_new car                                100 non-null    bool   
+ 32  purpose_other                                  100 non-null    bool   
+ 33  purpose_radio/tv                               100 non-null    bool   
+ 34  purpose_repairs                                100 non-null    bool   
+ 35  purpose_used car                               100 non-null    bool   
+ 36  savings_status_100&lt;=X&lt;500                      100 non-null    bool   
+ 37  savings_status_500&lt;=X&lt;1000                     100 non-null    bool   
+ 38  savings_status_&lt;100                            100 non-null    bool   
+ 39  savings_status_&gt;=1000                          100 non-null    bool   
+ 40  savings_status_no known savings                100 non-null    bool   
+ 41  employment_1&lt;=X&lt;4                              100 non-null    bool   
+ 42  employment_4&lt;=X&lt;7                              100 non-null    bool   
+ 43  employment_&lt;1                                  100 non-null    bool   
+ 44  employment_&gt;=7                                 100 non-null    bool   
+ 45  employment_unemployed                          100 non-null    bool   
+ 46  personal_status_female div/dep/mar             100 non-null    bool   
+ 47  personal_status_male div/sep                   100 non-null    bool   
+ 48  personal_status_male mar/wid                   100 non-null    bool   
+ 49  personal_status_male single                    100 non-null    bool   
+ 50  other_parties_co applicant                     100 non-null    bool   
+ 51  other_parties_guarantor                        100 non-null    bool   
+ 52  other_parties_none                             100 non-null    bool   
+ 53  property_magnitude_car                         100 non-null    bool   
+ 54  property_magnitude_life insurance              100 non-null    bool   
+ 55  property_magnitude_no known property           100 non-null    bool   
+ 56  property_magnitude_real estate                 100 non-null    bool   
+ 57  other_payment_plans_bank                       100 non-null    bool   
+ 58  other_payment_plans_none                       100 non-null    bool   
+ 59  other_payment_plans_stores                     100 non-null    bool   
+ 60  housing_for free                               100 non-null    bool   
+ 61  housing_own                                    100 non-null    bool   
+ 62  housing_rent                                   100 non-null    bool   
+ 63  job_high qualif/self emp/mgmt                  100 non-null    bool   
+ 64  job_skilled                                    100 non-null    bool   
+ 65  job_unemp/unskilled non res                    100 non-null    bool   
+ 66  job_unskilled resident                         100 non-null    bool   
+ 67  own_telephone_none                             100 non-null    bool   
+ 68  own_telephone_yes                              100 non-null    bool   
+ 69  foreign_worker_no                              100 non-null    bool   
+ 70  foreign_worker_yes                             100 non-null    bool   
+ 71  health_status_bad                              100 non-null    bool   
+ 72  health_status_good                             100 non-null    bool   
+dtypes: bool(55), float64(18)
+memory usage: 19.6 KB</code></pre>
+</div>
+</div>
+<div id="cell-34" class="cell" data-execution_count="152">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert boolean target to integers</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>df_encoded[<span class="st">'y'</span>] <span class="op">=</span> df_encoded[<span class="st">'y'</span>].astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-35" class="cell" data-execution_count="153">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df_encoded.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="153">
+<div class="ansi-escaped-output">
+<pre>duration                  float64
+credit_amount             float64
+installment_commitment    float64
+residence_since           float64
+age                       float64
+                           <span class="ansi-yellow-fg">...</span>   
+own_telephone_yes            bool
+foreign_worker_no            bool
+foreign_worker_yes           bool
+health_status_bad            bool
+health_status_good           bool
+Length: <span class="ansi-cyan-fg ansi-bold">73</span>, dtype: object</pre>
+</div>
+</div>
+</div>
+<div id="cell-36" class="cell" data-execution_count="113">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Binning 'age' into categories</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#df_encoded['age_bin'] = pd.cut(df['age'], bins=[18, 30, 45, 60, 100], labels=['18-30', '31-45', '46-60', '60+'])</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Binning 'credit_amount'</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co">#df_encoded['credit_amount_bin'] = pd.qcut(df['credit_amount'], q=4, labels=['low', 'medium', 'high', 'very high'])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-37" class="cell" data-execution_count="114">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df_encoded['employment_credit_interaction'] = df['employment'] + "_" + df['credit_history']</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-38" class="cell" data-execution_count="115">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the lower bound from 'employment'</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co">#df_encoded['employment_min'] = df['employment'].str.extract(r'(\d+)', expand=False).astype(float)</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Similarly for 'checking_status'</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#df_encoded['checking_min'] = df['checking_status'].str.extract(r'(\d+)', expand=False).astype(float)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-39" class="cell" data-execution_count="154">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df_encoded</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="154">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">credit_amount</th>
+<th data-quarto-table-cell-role="th">installment_commitment</th>
+<th data-quarto-table-cell-role="th">residence_since</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">existing_credits</th>
+<th data-quarto-table-cell-role="th">num_dependents</th>
+<th data-quarto-table-cell-role="th">X_1</th>
+<th data-quarto-table-cell-role="th">X_2</th>
+<th data-quarto-table-cell-role="th">X_3</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">job_high qualif/self emp/mgmt</th>
+<th data-quarto-table-cell-role="th">job_skilled</th>
+<th data-quarto-table-cell-role="th">job_unemp/unskilled non res</th>
+<th data-quarto-table-cell-role="th">job_unskilled resident</th>
+<th data-quarto-table-cell-role="th">own_telephone_none</th>
+<th data-quarto-table-cell-role="th">own_telephone_yes</th>
+<th data-quarto-table-cell-role="th">foreign_worker_no</th>
+<th data-quarto-table-cell-role="th">foreign_worker_yes</th>
+<th data-quarto-table-cell-role="th">health_status_bad</th>
+<th data-quarto-table-cell-role="th">health_status_good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.616420</td>
+<td>-0.058349</td>
+<td>0.874126</td>
+<td>-0.751108</td>
+<td>-0.295901</td>
+<td>-0.692308</td>
+<td>2.064742</td>
+<td>-1.703735</td>
+<td>-1.129340</td>
+<td>-0.302667</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.585887</td>
+<td>1.013586</td>
+<td>-0.985716</td>
+<td>1.058791</td>
+<td>-0.723504</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>0.753875</td>
+<td>0.840695</td>
+<td>0.260109</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>-0.353048</td>
+<td>-0.499975</td>
+<td>0.874126</td>
+<td>1.058791</td>
+<td>0.815866</td>
+<td>1.230769</td>
+<td>-0.484322</td>
+<td>0.013467</td>
+<td>-0.487520</td>
+<td>1.118564</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2.070621</td>
+<td>-0.034398</td>
+<td>0.874126</td>
+<td>-1.656058</td>
+<td>0.815866</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>1.370483</td>
+<td>-0.871247</td>
+<td>0.895340</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.616420</td>
+<td>-0.074413</td>
+<td>-0.985716</td>
+<td>1.058791</td>
+<td>-1.407669</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>1.238906</td>
+<td>-0.908444</td>
+<td>-0.726348</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">95</td>
+<td>-0.110681</td>
+<td>-0.098948</td>
+<td>0.874126</td>
+<td>-0.751108</td>
+<td>-0.723504</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>0.732091</td>
+<td>-1.777751</td>
+<td>0.525632</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">96</td>
+<td>2.070621</td>
+<td>3.498022</td>
+<td>-0.985716</td>
+<td>-0.751108</td>
+<td>-1.236628</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>0.883030</td>
+<td>-0.715288</td>
+<td>1.173856</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">97</td>
+<td>-0.353048</td>
+<td>0.137053</td>
+<td>-0.985716</td>
+<td>-0.751108</td>
+<td>-0.124860</td>
+<td>1.230769</td>
+<td>2.064742</td>
+<td>-1.421911</td>
+<td>0.822330</td>
+<td>1.029658</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">98</td>
+<td>-0.353048</td>
+<td>-0.826520</td>
+<td>0.874126</td>
+<td>-0.751108</td>
+<td>-1.065586</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>-0.192770</td>
+<td>-0.930264</td>
+<td>1.362040</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">99</td>
+<td>-0.595415</td>
+<td>-0.040824</td>
+<td>-0.055795</td>
+<td>-0.751108</td>
+<td>-0.723504</td>
+<td>-0.692308</td>
+<td>-0.484322</td>
+<td>1.093527</td>
+<td>0.874229</td>
+<td>1.015878</td>
+<td>...</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>100 rows × 73 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-40" class="cell" data-execution_count="122">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Ensure bin columns remain categorical (they won't be standardized)</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_encoded['age_bin'] = df_encoded['age_bin'].astype(str)</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_encoded['credit_amount_bin'] = df_encoded['credit_amount_bin'].astype(str)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-41" class="cell" data-execution_count="123">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Target encoding for 'purpose'</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># purpose_mean_target = df.groupby('purpose')['y'].mean()</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_encoded['purpose_target_mean'] = df['purpose'].map(purpose_mean_target)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-42" class="cell" data-execution_count="155">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df_encoded.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 100 entries, 0 to 99
+Data columns (total 73 columns):
+ #   Column                                         Non-Null Count  Dtype  
+---  ------                                         --------------  -----  
+ 0   duration                                       100 non-null    float64
+ 1   credit_amount                                  100 non-null    float64
+ 2   installment_commitment                         100 non-null    float64
+ 3   residence_since                                100 non-null    float64
+ 4   age                                            100 non-null    float64
+ 5   existing_credits                               100 non-null    float64
+ 6   num_dependents                                 100 non-null    float64
+ 7   X_1                                            100 non-null    float64
+ 8   X_2                                            100 non-null    float64
+ 9   X_3                                            100 non-null    float64
+ 10  X_4                                            100 non-null    float64
+ 11  X_5                                            100 non-null    float64
+ 12  X_6                                            100 non-null    float64
+ 13  X_7                                            100 non-null    float64
+ 14  X_8                                            100 non-null    float64
+ 15  X_9                                            100 non-null    float64
+ 16  X_10                                           100 non-null    float64
+ 17  X_11                                           100 non-null    float64
+ 18  y                                              100 non-null    int32  
+ 19  checking_status_0&lt;=X&lt;200                       100 non-null    bool   
+ 20  checking_status_&lt;0                             100 non-null    bool   
+ 21  checking_status_&gt;=200                          100 non-null    bool   
+ 22  checking_status_no checking                    100 non-null    bool   
+ 23  credit_history_all paid                        100 non-null    bool   
+ 24  credit_history_critical/other existing credit  100 non-null    bool   
+ 25  credit_history_delayed previously              100 non-null    bool   
+ 26  credit_history_existing paid                   100 non-null    bool   
+ 27  credit_history_no credits/all paid             100 non-null    bool   
+ 28  purpose_business                               100 non-null    bool   
+ 29  purpose_education                              100 non-null    bool   
+ 30  purpose_furniture/equipment                    100 non-null    bool   
+ 31  purpose_new car                                100 non-null    bool   
+ 32  purpose_other                                  100 non-null    bool   
+ 33  purpose_radio/tv                               100 non-null    bool   
+ 34  purpose_repairs                                100 non-null    bool   
+ 35  purpose_used car                               100 non-null    bool   
+ 36  savings_status_100&lt;=X&lt;500                      100 non-null    bool   
+ 37  savings_status_500&lt;=X&lt;1000                     100 non-null    bool   
+ 38  savings_status_&lt;100                            100 non-null    bool   
+ 39  savings_status_&gt;=1000                          100 non-null    bool   
+ 40  savings_status_no known savings                100 non-null    bool   
+ 41  employment_1&lt;=X&lt;4                              100 non-null    bool   
+ 42  employment_4&lt;=X&lt;7                              100 non-null    bool   
+ 43  employment_&lt;1                                  100 non-null    bool   
+ 44  employment_&gt;=7                                 100 non-null    bool   
+ 45  employment_unemployed                          100 non-null    bool   
+ 46  personal_status_female div/dep/mar             100 non-null    bool   
+ 47  personal_status_male div/sep                   100 non-null    bool   
+ 48  personal_status_male mar/wid                   100 non-null    bool   
+ 49  personal_status_male single                    100 non-null    bool   
+ 50  other_parties_co applicant                     100 non-null    bool   
+ 51  other_parties_guarantor                        100 non-null    bool   
+ 52  other_parties_none                             100 non-null    bool   
+ 53  property_magnitude_car                         100 non-null    bool   
+ 54  property_magnitude_life insurance              100 non-null    bool   
+ 55  property_magnitude_no known property           100 non-null    bool   
+ 56  property_magnitude_real estate                 100 non-null    bool   
+ 57  other_payment_plans_bank                       100 non-null    bool   
+ 58  other_payment_plans_none                       100 non-null    bool   
+ 59  other_payment_plans_stores                     100 non-null    bool   
+ 60  housing_for free                               100 non-null    bool   
+ 61  housing_own                                    100 non-null    bool   
+ 62  housing_rent                                   100 non-null    bool   
+ 63  job_high qualif/self emp/mgmt                  100 non-null    bool   
+ 64  job_skilled                                    100 non-null    bool   
+ 65  job_unemp/unskilled non res                    100 non-null    bool   
+ 66  job_unskilled resident                         100 non-null    bool   
+ 67  own_telephone_none                             100 non-null    bool   
+ 68  own_telephone_yes                              100 non-null    bool   
+ 69  foreign_worker_no                              100 non-null    bool   
+ 70  foreign_worker_yes                             100 non-null    bool   
+ 71  health_status_bad                              100 non-null    bool   
+ 72  health_status_good                             100 non-null    bool   
+dtypes: bool(54), float64(18), int32(1)
+memory usage: 19.9 KB</code></pre>
+</div>
+</div>
+<div id="cell-43" class="cell" data-execution_count="156">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df_encoded[<span class="st">"checking_status_0&lt;=X&lt;200"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="156">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-cyan-fg ansi-bold">0</span>      <span style="font-style:italic" class="ansi-bright-green-fg">True</span>
+<span class="ansi-cyan-fg ansi-bold">1</span>     <span style="font-style:italic" class="ansi-bright-red-fg">False</span>
+<span class="ansi-cyan-fg ansi-bold">2</span>     <span style="font-style:italic" class="ansi-bright-red-fg">False</span>
+<span class="ansi-cyan-fg ansi-bold">3</span>     <span style="font-style:italic" class="ansi-bright-red-fg">False</span>
+<span class="ansi-cyan-fg ansi-bold">4</span>      <span style="font-style:italic" class="ansi-bright-green-fg">True</span>
+      <span class="ansi-yellow-fg">...</span>  
+<span class="ansi-cyan-fg ansi-bold">95</span>    <span style="font-style:italic" class="ansi-bright-red-fg">False</span>
+<span class="ansi-cyan-fg ansi-bold">96</span>     <span style="font-style:italic" class="ansi-bright-green-fg">True</span>
+<span class="ansi-cyan-fg ansi-bold">97</span>    <span style="font-style:italic" class="ansi-bright-red-fg">False</span>
+<span class="ansi-cyan-fg ansi-bold">98</span>     <span style="font-style:italic" class="ansi-bright-green-fg">True</span>
+<span class="ansi-cyan-fg ansi-bold">99</span>    <span style="font-style:italic" class="ansi-bright-red-fg">False</span>
+Name: checking_status_0&lt;=X&lt;<span class="ansi-cyan-fg ansi-bold">200</span>, Length: <span class="ansi-cyan-fg ansi-bold">100</span>, dtype: bool</pre>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

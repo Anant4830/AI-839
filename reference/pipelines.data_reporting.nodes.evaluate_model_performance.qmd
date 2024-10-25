@@ -1,0 +1,10 @@
+# pipelines.data_reporting.nodes.evaluate_model_performance { #src.anant_ai_839.pipelines.data_reporting.nodes.evaluate_model_performance }
+
+`anant_ai_839.pipelines.data_reporting.nodes.evaluate_model_performance(y_true, y_pred, output_path)`
+
+Evaluate model performance and save the classification report.
+
+Args:
+    y_true (array-like): True labels.
+    y_pred (array-like): Predicted labels.
+    output_path (str): Path to save the report.

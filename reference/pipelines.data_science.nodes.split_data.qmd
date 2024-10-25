@@ -1,0 +1,16 @@
+# pipelines.data_science.nodes.split_data { #src.anant_ai_839.pipelines.data_science.nodes.split_data }
+
+`anant_ai_839.pipelines.data_science.nodes.split_data(df, parameter)`
+
+Splits the input dataframe into training and testing datasets.
+
+Args:
+    df: The input dataframe containing the feature columns and target column 'y'.
+    parameter: A dictionary with configuration parameters, e.g., "test_size".
+
+Returns:
+    A tuple containing:
+        - X_train: Training feature data.
+        - X_test: Testing feature data.
+        - y_train: Training target data.
+        - y_test: Testing target data.

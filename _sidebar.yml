@@ -1,0 +1,20 @@
+website:
+  sidebar:
+  - contents:
+    - reference/index.qmd
+    - contents:
+      - reference/pipelines.data_preprocessing.nodes.preprocess_data.qmd
+      section: All Functional Node for Data Preprocessing Pipeline
+    - contents:
+      - reference/pipelines.data_science.nodes.split_data.qmd
+      - reference/pipelines.data_science.nodes.train_model.qmd
+      - reference/pipelines.data_science.nodes.evaluate_model.qmd
+      - reference/pipelines.data_science.nodes.plot_confusion_matrix.qmd
+      section: All Functional Node for Data Science Pipeline
+    - contents:
+      - reference/pipelines.data_reporting.nodes.generate_drift_report.qmd
+      - reference/pipelines.data_reporting.nodes.evaluate_model_performance.qmd
+      - reference/pipelines.data_reporting.nodes.visualize_results.qmd
+      section: All Functional Node for Data Reporting Pipeline
+    id: reference
+  - id: dummy-sidebar

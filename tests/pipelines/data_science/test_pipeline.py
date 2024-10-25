@@ -1,6 +1,20 @@
+"""
+This is a boilerplate test file for pipeline 'data_science'
+generated using Kedro 0.19.8.
+Please add your pipeline tests here.
+
+Kedro recommends using `pytest` framework, more info about it can be found
+in the official documentation:
+https://docs.pytest.org/en/latest/getting-started.html
+"""
+
+# NOTE: This example test is yet to be refactored.
+# A complete version is available under the testing best practices section.
+
 import logging
 import pandas as pd
 import pytest
+
 from kedro.io import DataCatalog
 from kedro.runner import SequentialRunner
 from anant_ai_839.pipelines.data_science import create_pipeline as create_ds_pipeline
@@ -10,10 +24,9 @@ from anant_ai_839.pipelines.data_science.nodes import split_data
 def dummy_data():
     return pd.DataFrame(
         {
-            "engines": [1, 2, 3],
-            "crew": [4, 5, 6],
-            "passenger_capacity": [5, 6, 7],
-            "price": [120, 290, 30],
+            "age": [18, 20, 33],
+            "credit_amount": [4000, 5000, 60000],
+            "y": [1, 0, 0],
         }
     )
 
@@ -23,7 +36,7 @@ def dummy_parameters():
         "model_options": {
             "test_size": 0.2,
             "random_state": 3,
-            "features": ["engines", "passenger_capacity", "crew"],
+            "features": ["age", "credit_amount"],
         }
     }
     return parameters
@@ -39,11 +52,11 @@ def test_split_data(dummy_data, dummy_parameters):
     assert len(y_test) == 1
 
 def test_split_data_missing_price(dummy_data, dummy_parameters):
-    dummy_data_missing_price = dummy_data.drop(columns="price")
+    dummy_data_missing_y = dummy_data.drop(columns="y")
     with pytest.raises(KeyError) as e_info:
-        X_train, X_test, y_train, y_test = split_data(dummy_data_missing_price, dummy_parameters["model_options"])
+        X_train, X_test, y_train, y_test = split_data(dummy_data_missing_y, dummy_parameters["model_options"])
 
-    assert "price" in str(e_info.value)
+    assert "y" in str(e_info.value)
 
 def test_data_science_pipeline(caplog, dummy_data, dummy_parameters):
     pipeline = (
@@ -54,7 +67,7 @@ def test_data_science_pipeline(caplog, dummy_data, dummy_parameters):
     catalog = DataCatalog()
     catalog.add_feed_dict(
         {
-            "model_input_table" : dummy_data,
+            "preprocessed_dataset" : dummy_data,
             "params:model_options": dummy_parameters["model_options"],
         }
     )

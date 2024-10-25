@@ -1,0 +1,3 @@
+dataset_id_742:
+  type: pandas.CSVDataset
+  filepath: data/00_test/dataset_id_742.csv

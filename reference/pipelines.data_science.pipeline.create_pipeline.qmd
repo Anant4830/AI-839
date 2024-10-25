@@ -1,0 +1,9 @@
+# pipelines.data_science.pipeline.create_pipeline { #src.anant_ai_839.pipelines.data_science.pipeline.create_pipeline }
+
+`anant_ai_839.pipelines.data_science.pipeline.create_pipeline(**kwargs)`
+
+Creates a Kedro pipeline for data science tasks including data splitting,
+model training, model evaluation, and confusion matrix plotting.
+
+Returns:
+    Pipeline: A configured Kedro pipeline with nodes for data science tasks.

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/162708247212727938/8f951c3d10a74e6c89202dc8f3669385/artifacts
+end_time: 1727184645914
+entry_point_name: ''
+experiment_id: '162708247212727938'
+lifecycle_stage: active
+run_id: 8f951c3d10a74e6c89202dc8f3669385
+run_name: __default__
+run_uuid: 8f951c3d10a74e6c89202dc8f3669385
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1727184640490
+status: 3
+tags: []
+user_id: Admin

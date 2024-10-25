@@ -1,0 +1,30 @@
+# Function reference {.doc .doc-index}
+
+## All Functional Node for Data Preprocessing Pipeline
+
+Functions to inspect docstrings.
+
+| | |
+| --- | --- |
+| [pipelines.data_preprocessing.nodes.preprocess_data](pipelines.data_preprocessing.nodes.preprocess_data.qmd#src.anant_ai_839.pipelines.data_preprocessing.nodes.preprocess_data) | Preprocess the data, including encoding and scaling. |
+
+## All Functional Node for Data Science Pipeline
+
+Functions to inspect docstrings.
+
+| | |
+| --- | --- |
+| [pipelines.data_science.nodes.split_data](pipelines.data_science.nodes.split_data.qmd#src.anant_ai_839.pipelines.data_science.nodes.split_data) | Splits the input dataframe into training and testing datasets. |
+| [pipelines.data_science.nodes.train_model](pipelines.data_science.nodes.train_model.qmd#src.anant_ai_839.pipelines.data_science.nodes.train_model) | Trains a logistic regression model on the provided training data. |
+| [pipelines.data_science.nodes.evaluate_model](pipelines.data_science.nodes.evaluate_model.qmd#src.anant_ai_839.pipelines.data_science.nodes.evaluate_model) | Evaluates the trained model on the test dataset and logs the accuracy score. |
+| [pipelines.data_science.nodes.plot_confusion_matrix](pipelines.data_science.nodes.plot_confusion_matrix.qmd#src.anant_ai_839.pipelines.data_science.nodes.plot_confusion_matrix) | Generates a confusion matrix plot and saves it to the specified path. |
+
+## All Functional Node for Data Reporting Pipeline
+
+Functions to inspect docstrings.
+
+| | |
+| --- | --- |
+| [pipelines.data_reporting.nodes.generate_drift_report](pipelines.data_reporting.nodes.generate_drift_report.qmd#src.anant_ai_839.pipelines.data_reporting.nodes.generate_drift_report) | Generate a report on data drift. |
+| [pipelines.data_reporting.nodes.evaluate_model_performance](pipelines.data_reporting.nodes.evaluate_model_performance.qmd#src.anant_ai_839.pipelines.data_reporting.nodes.evaluate_model_performance) | Evaluate model performance and save the classification report. |
+| [pipelines.data_reporting.nodes.visualize_results](pipelines.data_reporting.nodes.visualize_results.qmd#src.anant_ai_839.pipelines.data_reporting.nodes.visualize_results) | Visualize model results using Plotly. |

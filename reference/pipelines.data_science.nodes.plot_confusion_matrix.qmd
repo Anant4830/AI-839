@@ -1,0 +1,13 @@
+# pipelines.data_science.nodes.plot_confusion_matrix { #src.anant_ai_839.pipelines.data_science.nodes.plot_confusion_matrix }
+
+`anant_ai_839.pipelines.data_science.nodes.plot_confusion_matrix(y_test, y_pred, output_path)`
+
+Generates a confusion matrix plot and saves it to the specified path.
+
+Args:
+    y_test: True labels.
+    y_pred: Predicted labels.
+    output_path: Path to save the confusion matrix plot.
+
+Returns:
+    None

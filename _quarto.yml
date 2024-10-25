@@ -1,0 +1,49 @@
+project:
+  type: website
+
+# tell quarto to read the generated sidebar
+metadata-files:
+  - _sidebar.yml
+
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  # package: quartodoc
+  package: src.anant_ai_839
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
+  sections:
+    - title: All Functional Node for Data Preprocessing Pipeline
+      desc: Functions to inspect docstrings.
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        #- get_object
+        #- preview
+        - pipelines.data_preprocessing.nodes.preprocess_data
+
+    - title: All Functional Node for Data Science Pipeline
+      desc: Functions to inspect docstrings.
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        #- get_object
+        #- preview
+        - pipelines.data_science.nodes.split_data
+        - pipelines.data_science.nodes.train_model
+        - pipelines.data_science.nodes.evaluate_model  
+        - pipelines.data_science.nodes.plot_confusion_matrix
+  
+    - title: All Functional Node for Data Reporting Pipeline
+      desc: Functions to inspect docstrings.
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        #- get_object
+        #- preview
+        - pipelines.data_reporting.nodes.generate_drift_report
+        - pipelines.data_reporting.nodes.evaluate_model_performance
+        - pipelines.data_reporting.nodes.visualize_results
+        

@@ -1,0 +1,10 @@
+# pipelines.data_reporting.nodes.generate_drift_report { #src.anant_ai_839.pipelines.data_reporting.nodes.generate_drift_report }
+
+`anant_ai_839.pipelines.data_reporting.nodes.generate_drift_report(train_data, test_data, output_path)`
+
+Generate a report on data drift.
+
+Args:
+    train_data (pd.DataFrame): Training dataset.
+    test_data (pd.DataFrame): Testing dataset.
+    output_path (str): Path to save the report.

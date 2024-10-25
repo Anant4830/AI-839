@@ -1,58 +1,121 @@
+"""
+This is a boilerplate pipeline 'data_science'
+generated using Kedro 0.19.8
+"""
+"""
+This is a boilerplate pipeline 'data_science'
+generated using Kedro 0.19.7
+"""
+
 import logging
-from typing import Dict, Tuple
-
+import typing as t
 import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import max_error, mean_absolute_error, r2_score
+
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, precision_score
+from sklearn.linear_model import LogisticRegression
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#from sklearn.externals import joblib
 
 
-def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
-    """Splits data into features and targets training and test sets.
+logger = logging.getLogger(__name__)
 
-    Args:
-        data: Data containing features and target.
-        parameters: Parameters defined in parameters/data_science.yml.
-    Returns:
-        Split data.
+def split_data(df: pd.DataFrame, parameter: t.Dict) -> t.Tuple:
     """
-    X = data[parameters["features"]]
-    y = data["price"]
+    Splits the input dataframe into training and testing datasets.
+    
+    Args:
+        df: The input dataframe containing the feature columns and target column 'y'.
+        parameter: A dictionary with configuration parameters, e.g., "test_size".
+    
+    Returns:
+        A tuple containing:
+            - X_train: Training feature data.
+            - X_test: Testing feature data.
+            - y_train: Training target data.
+            - y_test: Testing target data.
+    """
+    #X = df[parameter["features"]]
+    X = df.drop(columns=["y"])
+    y = df["y"]
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=parameters["test_size"], random_state=parameters["random_state"]
+        X, y, test_size=parameter["test_size"]
     )
     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
-    """Trains the linear regression model.
-
-    Args:
-        X_train: Training data of independent features.
-        y_train: Training data for price.
-
-    Returns:
-        Trained model.
+def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LogisticRegression:
     """
-    regressor = LinearRegression()
-    regressor.fit(X_train, y_train)
-    return regressor
-
-
-def evaluate_model(
-    regressor: LinearRegression, X_test: pd.DataFrame, y_test: pd.Series
-) -> Dict[str, float]:
-    """Calculates and logs the coefficient of determination.
-
+    Trains a logistic regression model on the provided training data.
+    
     Args:
-        regressor: Trained model.
-        X_test: Testing data of independent features.
-        y_test: Testing data for price.
+        X_train: Training features.
+        y_train: Training target.
+    
+    Returns:
+        The trained logistic regression model.
+    """
+    model = LogisticRegression()
+    model.fit(X_train, y_train)
+
+    # # Save the trained model
+    # joblib.dump(model, model_path)  # or use pickle to save
+    # logger.info(f"Model saved to {model_path}")
+
+    return model
+
+def evaluate_model(regressor: LogisticRegression, X_test: pd.Series, y_test: pd.Series):
+    """
+    Evaluates the trained model on the test dataset and logs the accuracy score.
+    
+    Args:
+        regressor: The trained logistic regression model.
+        X_test: Testing features.
+        y_test: Testing target.
+    
+    Logs:
+        The accuracy of the model on the test data.
     """
     y_pred = regressor.predict(X_test)
-    score = r2_score(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    me = max_error(y_test, y_pred)
-    logger = logging.getLogger(__name__)
-    logger.info("Model has a coefficient R^2 of %.3f on test data.", score)
-    return {"r2_score": score, "mae": mae, "max_error": me}
+    score = accuracy_score(y_test, y_pred)
+    logger.info("Model has a accuracy of %.3f on test data.", score)
+    return y_pred
+
+def plot_confusion_matrix(y_test, y_pred, output_path: str):
+    """
+    Generates a confusion matrix plot and saves it to the specified path.
+    
+    Args:
+        y_test: True labels.
+        y_pred: Predicted labels.
+        output_path: Path to save the confusion matrix plot.
+    
+    Returns:
+        None
+    """
+    # Compute confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
+
+    # # Plot confusion matrix using seaborn for better visuals
+    # plt.figure(figsize=(10, 7))
+    # sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False)
+    
+    # plt.title("Confusion Matrix")
+    # plt.xlabel("Predicted")
+    # plt.ylabel("Actual")
+    
+    # # Save the plot
+    # plt.savefig(output_path)
+    # plt.close()
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
+    
+    ax.set_title("Confusion Matrix")
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
+
+    return fig

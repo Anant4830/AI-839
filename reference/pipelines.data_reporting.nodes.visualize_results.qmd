@@ -1,0 +1,9 @@
+# pipelines.data_reporting.nodes.visualize_results { #src.anant_ai_839.pipelines.data_reporting.nodes.visualize_results }
+
+`anant_ai_839.pipelines.data_reporting.nodes.visualize_results(results_data, output_path)`
+
+Visualize model results using Plotly.
+
+Args:
+    results_data (pd.DataFrame): DataFrame containing results.
+    output_path (str): Path to save the visualization.
