@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/bf41755d799f44d98151cefa04e9ab54/artifacts
+end_time: 1729938208318
+entry_point_name: ''
+experiment_id: '941905144546297520'
+lifecycle_stage: active
+run_id: bf41755d799f44d98151cefa04e9ab54
+run_name: victorious-gull-23
+run_uuid: bf41755d799f44d98151cefa04e9ab54
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729938192423
+status: 3
+tags: []
+user_id: Admin

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/8f91050ed07c41b8bd0b1a49cfcac0d5/artifacts
+end_time: 1729937225978
+entry_point_name: ''
+experiment_id: '941905144546297520'
+lifecycle_stage: active
+run_id: 8f91050ed07c41b8bd0b1a49cfcac0d5
+run_name: charming-shrike-955
+run_uuid: 8f91050ed07c41b8bd0b1a49cfcac0d5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729937211252
+status: 3
+tags: []
+user_id: Admin

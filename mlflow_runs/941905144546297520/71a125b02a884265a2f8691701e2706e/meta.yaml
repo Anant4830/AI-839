@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/71a125b02a884265a2f8691701e2706e/artifacts
+end_time: 1729940713681
+entry_point_name: ''
+experiment_id: '941905144546297520'
+lifecycle_stage: active
+run_id: 71a125b02a884265a2f8691701e2706e
+run_name: dazzling-ray-823
+run_uuid: 71a125b02a884265a2f8691701e2706e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729940699176
+status: 3
+tags: []
+user_id: Admin

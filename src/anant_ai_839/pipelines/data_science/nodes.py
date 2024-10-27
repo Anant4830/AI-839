@@ -18,36 +18,38 @@ from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-#from sklearn.externals import joblib
+import joblib
+import mlflow
+import mlflow.sklearn
 
 
 logger = logging.getLogger(__name__)
 
-def split_data(df: pd.DataFrame, parameter: t.Dict) -> t.Tuple:
-    """
-    Splits the input dataframe into training and testing datasets.
+# def split_data(df: pd.DataFrame, parameter: t.Dict) -> t.Tuple:
+#     """
+#     Splits the input dataframe into training and testing datasets.
     
-    Args:
-        df: The input dataframe containing the feature columns and target column 'y'.
-        parameter: A dictionary with configuration parameters, e.g., "test_size".
+#     Args:
+#         df: The input dataframe containing the feature columns and target column 'y'.
+#         parameter: A dictionary with configuration parameters, e.g., "test_size".
     
-    Returns:
-        A tuple containing:
-            - X_train: Training feature data.
-            - X_test: Testing feature data.
-            - y_train: Training target data.
-            - y_test: Testing target data.
-    """
-    #X = df[parameter["features"]]
-    X = df.drop(columns=["y"])
-    y = df["y"]
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=parameter["test_size"]
-    )
-    return X_train, X_test, y_train, y_test
+#     Returns:
+#         A tuple containing:
+#             - X_train: Training feature data.
+#             - X_test: Testing feature data.
+#             - y_train: Training target data.
+#             - y_test: Testing target data.
+#     """
+#     #X = df[parameter["features"]]
+#     X = df.drop(columns=["y"])
+#     y = df["y"]
+#     X_train, X_test, y_train, y_test = train_test_split(
+#         X, y, test_size=parameter["test_size"]
+#     )
+#     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LogisticRegression:
+def train_model(X_train: pd.DataFrame, y_train: pd.Series, model_path: str) -> LogisticRegression:
     """
     Trains a logistic regression model on the provided training data.
     
@@ -61,9 +63,18 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LogisticRegression
     model = LogisticRegression()
     model.fit(X_train, y_train)
 
-    # # Save the trained model
-    # joblib.dump(model, model_path)  # or use pickle to save
-    # logger.info(f"Model saved to {model_path}")
+    # if mlflow.active_run():
+    #     mlflow.end_run()
+
+    # # Log the model with MLflow
+    # with mlflow.start_run():
+    #     mlflow.sklearn.log_model(model, "logistic_regression_model")
+    #     mlflow.log_params({"model_type": "Logistic Regression"})
+    #     mlflow.log_metric("accuracy", model.score(X_train, y_train))
+
+    # Save the trained model
+    joblib.dump(model, model_path)  # or use pickle to save
+    logger.info(f"Model saved to {model_path}")
 
     return model
 

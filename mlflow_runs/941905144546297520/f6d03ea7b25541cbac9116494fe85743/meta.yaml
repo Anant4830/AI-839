@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/f6d03ea7b25541cbac9116494fe85743/artifacts
+end_time: 1729948330437
+entry_point_name: ''
+experiment_id: '941905144546297520'
+lifecycle_stage: active
+run_id: f6d03ea7b25541cbac9116494fe85743
+run_name: resilient-wolf-994
+run_uuid: f6d03ea7b25541cbac9116494fe85743
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729948314963
+status: 3
+tags: []
+user_id: Admin

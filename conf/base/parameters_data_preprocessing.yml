@@ -3,3 +3,9 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/0.19.8/configuration/parameters.html
+model_options:
+  test_size: 0.2
+  random_state: 8
+
+scaler_path: "data/04_feature/scaler.pkl"
+columns_path: "data/04_feature/columns.pkl"

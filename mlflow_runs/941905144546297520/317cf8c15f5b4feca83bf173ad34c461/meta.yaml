@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/317cf8c15f5b4feca83bf173ad34c461/artifacts
+end_time: 1729935830710
+entry_point_name: ''
+experiment_id: '941905144546297520'
+lifecycle_stage: active
+run_id: 317cf8c15f5b4feca83bf173ad34c461
+run_name: mercurial-steed-660
+run_uuid: 317cf8c15f5b4feca83bf173ad34c461
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729935818062
+status: 3
+tags: []
+user_id: Admin

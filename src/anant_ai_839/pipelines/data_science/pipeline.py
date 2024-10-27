@@ -5,7 +5,7 @@ generated using Kedro 0.19.8
 
 from kedro.pipeline import Pipeline, pipeline, node
 
-from .nodes import split_data, train_model, evaluate_model, plot_confusion_matrix
+from .nodes import train_model, evaluate_model, plot_confusion_matrix
 
 # def create_pipeline(**kwargs) -> Pipeline:
 #     pipeline_instance = pipeline([
@@ -44,6 +44,46 @@ from .nodes import split_data, train_model, evaluate_model, plot_confusion_matri
 
 #     return ds_pipeline_1 + ds_pipeline_2
 
+##This below code is taken from: 
+## https://github.com/Galileo-Galilei/kedro-mlflow-tutorial/blob/main/src/kedro_mlflow_tutorial/pipelines/ml_app/pipeline.py
+
+# def create_pipeline(**kwargs) -> Pipeline:
+#     pipeline_training = pipeline([
+#         node(
+#                 func=split_data,
+#                 inputs=["preprocessed_dataset", "params:model_options"],
+#                 outputs=["X_train", "X_test", "y_train", "y_test"],
+#                 name="split_data_node",
+#             ),
+#             node(
+#                 func=train_model,
+#                 inputs=["X_train", "y_train"],
+#                 outputs="classification",
+#                 name="train_model_node",
+#             ),
+#             node(
+#                 func=evaluate_model,
+#                 inputs=["classification", "X_test", "y_test"],
+#                 outputs="y_pred",
+#                 name="evaluate_model_node",
+#             ),
+#             node(
+#                 func = plot_confusion_matrix,
+#                 inputs=["y_test", "y_pred", "params:output_path"], 
+#                 outputs="confusion_matrix", 
+#                 name="plot_confusion_matrix_node",
+#             ),
+#     ])
+#     pipeline_inference = pipeline([
+#             node(
+#                 func=train_model,
+#                 inputs=["X_train", "y_train"],
+#                 outputs="classification",
+#                 name="train_model_node",
+#             ),
+#     ])
+#     return pipeline_training + pipeline_inference
+
 def create_pipeline(**kwargs) -> Pipeline:
     """
     Creates a Kedro pipeline for data science tasks including data splitting,
@@ -55,20 +95,14 @@ def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [
             node(
-                func=split_data,
-                inputs=["preprocessed_dataset", "params:model_options"],
-                outputs=["X_train", "X_test", "y_train", "y_test"],
-                name="split_data_node",
-            ),
-            node(
                 func=train_model,
-                inputs=["X_train", "y_train"],
+                inputs=["X_train_encoded", "y_train_int", "params:model_path"],
                 outputs="classification",
                 name="train_model_node",
             ),
             node(
                 func=evaluate_model,
-                inputs=["classification", "X_test", "y_test"],
+                inputs=["classification", "X_test_encoded", "y_test"],
                 outputs="y_pred",
                 name="evaluate_model_node",
             ),

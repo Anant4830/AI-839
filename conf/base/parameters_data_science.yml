@@ -19,9 +19,8 @@
 #   test_size: 0.2
 #   random_state: 8
 
-model_options:
-  test_size: 0.2
-  random_state: 8
-  
+model_path: "data/06_models/logistic_regression_model.pkl"  
 output_path: "data/08_reporting/confusion_matrix.png"
+
+
   

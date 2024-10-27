@@ -7,6 +7,41 @@ dataset_id_742:
       type: pandas.CSVDataset
       filepath: data/01_raw/dataset_id_742.csv
 
+#Output of the split
+X_train:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_train.csv
+
+X_test:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_test.csv
+
+y_train:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/y_train.csv
+
+# Assuming the preprocessing pipeline outputs these datasets
+X_train_encoded:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_train_encoded.csv
+
+X_test_encoded:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_test_encoded.csv
+
+y_train_int:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/y_train_int.csv
+
+y_test:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/y_test.csv
+
+#predicted y_pred which is also used by data_reporting pipeline
+y_pred:
+  type: MemoryDataset
+
+
 # preprocessed_dataset:
 #   type: pandas.ParquetDataset
 #   filepath: data/02_intermediate/preprocessed_dataset.pq
@@ -45,3 +80,17 @@ confusion_matrix:
 model_performance_metrics:
   type: pandas.CSVDataset
   filepath: data/05_model_output/model_performance_metrics.csv
+
+#For prediction/inference pipeline
+input_features:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/input_features.csv
+
+# scaler_path:
+#   type: pickle.PickleDataset
+#   filepath: data/04_feature/scaler.pkl
+
+# columns_path:
+#   type: pickle.PickleDataset
+#   filepath: data/04_feature/training_columns.pkl
+

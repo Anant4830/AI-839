@@ -17,6 +17,8 @@ import plotly.express as px
 import mlflow
 import mlflow.sklearn  # For logging sklearn models if needed
 
+import pdfkit
+import os
 
 def generate_drift_report(train_data: pd.DataFrame, test_data: pd.DataFrame, output_path: str) -> None:
     """Generate a report on data drift.
@@ -28,14 +30,14 @@ def generate_drift_report(train_data: pd.DataFrame, test_data: pd.DataFrame, out
     """
     report = Report(metrics=[DataDriftPreset(),])
     #report.calculate(train_data, test_data)
-    report.run(current_data=train_data, reference_data=test_data)
-    report.save(output_path)
-
-    print("This is my report", report)
-
+    report.run(current_data=train_data, reference_data=test_data, column_mapping=None)
+    
+    #saving report as html
+    report.save_html(output_path)
+    
     # Log the report artifact to MLflow
     mlflow.log_artifact(output_path)
-
+    
 def evaluate_model_performance(y_true, y_pred, output_path: str) -> None:
     """Evaluate model performance and save the classification report.
 

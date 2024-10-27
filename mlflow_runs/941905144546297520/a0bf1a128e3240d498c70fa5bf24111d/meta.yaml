@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/mlflow_runs/941905144546297520/a0bf1a128e3240d498c70fa5bf24111d/artifacts
+end_time: 1729926874824
+entry_point_name: ''
+experiment_id: '941905144546297520'
+lifecycle_stage: active
+run_id: a0bf1a128e3240d498c70fa5bf24111d
+run_name: amazing-trout-750
+run_uuid: a0bf1a128e3240d498c70fa5bf24111d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729926861842
+status: 3
+tags: []
+user_id: Admin
