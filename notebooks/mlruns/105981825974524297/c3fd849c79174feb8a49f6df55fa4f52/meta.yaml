@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/c3fd849c79174feb8a49f6df55fa4f52/artifacts
+end_time: 1731918974141
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: c3fd849c79174feb8a49f6df55fa4f52
+run_name: rogue-cod-638
+run_uuid: c3fd849c79174feb8a49f6df55fa4f52
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731918952394
+status: 3
+tags: []
+user_id: Admin

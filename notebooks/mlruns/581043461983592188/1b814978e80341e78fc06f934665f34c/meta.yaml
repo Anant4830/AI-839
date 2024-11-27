@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/1b814978e80341e78fc06f934665f34c/artifacts
+end_time: 1731912251181
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: 1b814978e80341e78fc06f934665f34c
+run_name: peaceful-mink-824
+run_uuid: 1b814978e80341e78fc06f934665f34c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731912231080
+status: 3
+tags: []
+user_id: Admin

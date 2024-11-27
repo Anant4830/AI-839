@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/3119031f8fff42ca80b596246dc83449/artifacts
+end_time: 1731912231007
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: 3119031f8fff42ca80b596246dc83449
+run_name: charming-smelt-772
+run_uuid: 3119031f8fff42ca80b596246dc83449
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731912212283
+status: 3
+tags: []
+user_id: Admin

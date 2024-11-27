@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/79a9e1893b0a413695439f43ca9619ab/artifacts
+end_time: 1731913488875
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: 79a9e1893b0a413695439f43ca9619ab
+run_name: painted-shark-361
+run_uuid: 79a9e1893b0a413695439f43ca9619ab
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731913469930
+status: 3
+tags: []
+user_id: Admin

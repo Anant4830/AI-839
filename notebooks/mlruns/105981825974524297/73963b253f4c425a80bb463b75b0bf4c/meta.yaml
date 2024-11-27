@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/73963b253f4c425a80bb463b75b0bf4c/artifacts
+end_time: 1731919053673
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: 73963b253f4c425a80bb463b75b0bf4c
+run_name: redolent-snipe-886
+run_uuid: 73963b253f4c425a80bb463b75b0bf4c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731919034131
+status: 3
+tags: []
+user_id: Admin

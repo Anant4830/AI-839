@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/13fce3e697e24bc1ac3ce87acf2d5498/artifacts
+end_time: 1731913469845
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: 13fce3e697e24bc1ac3ce87acf2d5498
+run_name: bemused-fowl-621
+run_uuid: 13fce3e697e24bc1ac3ce87acf2d5498
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731913452221
+status: 3
+tags: []
+user_id: Admin

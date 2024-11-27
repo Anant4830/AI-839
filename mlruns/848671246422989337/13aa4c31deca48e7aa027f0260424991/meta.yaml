@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/848671246422989337/13aa4c31deca48e7aa027f0260424991/artifacts
+end_time: 1731913383715
+entry_point_name: ''
+experiment_id: '848671246422989337'
+lifecycle_stage: active
+run_id: 13aa4c31deca48e7aa027f0260424991
+run_name: secretive-hawk-20
+run_uuid: 13aa4c31deca48e7aa027f0260424991
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731913361553
+status: 3
+tags: []
+user_id: Admin

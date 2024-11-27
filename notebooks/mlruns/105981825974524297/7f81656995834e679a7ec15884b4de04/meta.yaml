@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/7f81656995834e679a7ec15884b4de04/artifacts
+end_time: 1731918952322
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: 7f81656995834e679a7ec15884b4de04
+run_name: resilient-shoat-665
+run_uuid: 7f81656995834e679a7ec15884b4de04
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731918904668
+status: 3
+tags: []
+user_id: Admin

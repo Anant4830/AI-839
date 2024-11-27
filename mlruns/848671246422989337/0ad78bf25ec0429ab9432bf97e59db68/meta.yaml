@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/848671246422989337/0ad78bf25ec0429ab9432bf97e59db68/artifacts
+end_time: 1731920442619
+entry_point_name: ''
+experiment_id: '848671246422989337'
+lifecycle_stage: active
+run_id: 0ad78bf25ec0429ab9432bf97e59db68
+run_name: overjoyed-carp-510
+run_uuid: 0ad78bf25ec0429ab9432bf97e59db68
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731920431046
+status: 3
+tags: []
+user_id: Admin

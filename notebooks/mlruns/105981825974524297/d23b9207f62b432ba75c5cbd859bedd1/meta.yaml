@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/d23b9207f62b432ba75c5cbd859bedd1/artifacts
+end_time: 1731919034047
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: d23b9207f62b432ba75c5cbd859bedd1
+run_name: welcoming-wren-988
+run_uuid: d23b9207f62b432ba75c5cbd859bedd1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731919013819
+status: 3
+tags: []
+user_id: Admin

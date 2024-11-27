@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/7ef454fc6b004c1d9323fc1f1359e106/artifacts
+end_time: 1731919073278
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: 7ef454fc6b004c1d9323fc1f1359e106
+run_name: mysterious-roo-333
+run_uuid: 7ef454fc6b004c1d9323fc1f1359e106
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731919053745
+status: 3
+tags: []
+user_id: Admin

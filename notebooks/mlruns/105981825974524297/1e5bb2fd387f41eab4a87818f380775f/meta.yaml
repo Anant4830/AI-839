@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/1e5bb2fd387f41eab4a87818f380775f/artifacts
+end_time: 1731919013741
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: 1e5bb2fd387f41eab4a87818f380775f
+run_name: mercurial-sheep-496
+run_uuid: 1e5bb2fd387f41eab4a87818f380775f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731918994822
+status: 3
+tags: []
+user_id: Admin

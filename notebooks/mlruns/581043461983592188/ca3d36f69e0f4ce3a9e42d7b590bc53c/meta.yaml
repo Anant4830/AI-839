@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/ca3d36f69e0f4ce3a9e42d7b590bc53c/artifacts
+end_time: 1731913527336
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: ca3d36f69e0f4ce3a9e42d7b590bc53c
+run_name: defiant-trout-701
+run_uuid: ca3d36f69e0f4ce3a9e42d7b590bc53c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731913507772
+status: 3
+tags: []
+user_id: Admin

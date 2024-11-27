@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/a301f30c677047a1bdb0a8253a03f362/artifacts
+end_time: 1731919098426
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: a301f30c677047a1bdb0a8253a03f362
+run_name: agreeable-stoat-951
+run_uuid: a301f30c677047a1bdb0a8253a03f362
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731919073345
+status: 3
+tags: []
+user_id: Admin

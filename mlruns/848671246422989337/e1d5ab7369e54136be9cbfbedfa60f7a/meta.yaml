@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/848671246422989337/e1d5ab7369e54136be9cbfbedfa60f7a/artifacts
+end_time: 1731909355257
+entry_point_name: ''
+experiment_id: '848671246422989337'
+lifecycle_stage: active
+run_id: e1d5ab7369e54136be9cbfbedfa60f7a
+run_name: whimsical-stork-811
+run_uuid: e1d5ab7369e54136be9cbfbedfa60f7a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731909341552
+status: 3
+tags: []
+user_id: Admin

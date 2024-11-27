@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/0ea654af37c946a09a623cd0a3f8f8f6/artifacts
+end_time: 1731918994750
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: 0ea654af37c946a09a623cd0a3f8f8f6
+run_name: adventurous-croc-822
+run_uuid: 0ea654af37c946a09a623cd0a3f8f8f6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731918974221
+status: 3
+tags: []
+user_id: Admin

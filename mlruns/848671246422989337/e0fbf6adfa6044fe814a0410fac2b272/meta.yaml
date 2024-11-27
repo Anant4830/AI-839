@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/848671246422989337/e0fbf6adfa6044fe814a0410fac2b272/artifacts
+end_time: 1731909311313
+entry_point_name: ''
+experiment_id: '848671246422989337'
+lifecycle_stage: active
+run_id: e0fbf6adfa6044fe814a0410fac2b272
+run_name: unleashed-cub-487
+run_uuid: e0fbf6adfa6044fe814a0410fac2b272
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731909310884
+status: 3
+tags: []
+user_id: Admin

@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/02dadc0a60804c96a81bf24ad6a34a55/artifacts
+end_time: 1731912303060
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: 02dadc0a60804c96a81bf24ad6a34a55
+run_name: bittersweet-cat-241
+run_uuid: 02dadc0a60804c96a81bf24ad6a34a55
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731912108078
+status: 3
+tags: []
+user_id: Admin

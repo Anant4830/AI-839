@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/105981825974524297/15ac72525178440e9a9abb6efc90d575/artifacts
+end_time: 1731919117777
+entry_point_name: ''
+experiment_id: '105981825974524297'
+lifecycle_stage: active
+run_id: 15ac72525178440e9a9abb6efc90d575
+run_name: adaptable-moose-364
+run_uuid: 15ac72525178440e9a9abb6efc90d575
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731918904349
+status: 3
+tags: []
+user_id: Admin

@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Admin/Downloads/AI-839/MLOps/kedro-projects/anant-ai-839/notebooks/mlruns/581043461983592188/423aca1bf51a4ab89c2fd864641997aa/artifacts
+end_time: 1731912166870
+entry_point_name: ''
+experiment_id: '581043461983592188'
+lifecycle_stage: active
+run_id: 423aca1bf51a4ab89c2fd864641997aa
+run_name: unique-toad-523
+run_uuid: 423aca1bf51a4ab89c2fd864641997aa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731912141786
+status: 3
+tags: []
+user_id: Admin

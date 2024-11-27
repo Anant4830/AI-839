@@ -72,26 +72,6 @@ def preprocess_data(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.Ser
     
     # 4. Convert the target variable
     y_train_int = y_train.astype(int)
-    
-    # Feature Engineering
-    # 1. Bin numerical columns
-    # df_encoded['age_bin'] = pd.cut(df['age'], bins=[18, 30, 45, 60, 100], labels=['18-30', '31-45', '46-60', '60+'])
-    # df_encoded['credit_amount_bin'] = pd.qcut(df['credit_amount'], q=4, labels=['low', 'medium', 'high', 'very high'])
-    
-    # # 2. Create interaction features
-    # df_encoded['employment_credit_interaction'] = df['employment'] + "_" + df['credit_history']
-    
-    # # 3. Extract numerical information from text
-    # df_encoded['employment_min'] = df['employment'].str.extract(r'(\d+)', expand=False).astype(float)
-    # df_encoded['checking_min'] = df['checking_status'].str.extract(r'(\d+)', expand=False).astype(float)
-
-    # # Ensure bin columns remain categorical (they won't be standardized)
-    # #df_encoded['age_bin'] = df_encoded['age_bin'].astype(str)
-    # #df_encoded['credit_amount_bin'] = df_encoded['credit_amount_bin'].astype(str)
-    
-    # # 4. Target encoding for 'purpose'
-    # purpose_mean_target = df.groupby('purpose')['y'].mean()
-    # df_encoded['purpose_target_mean'] = df['purpose'].map(purpose_mean_target)
 
     # Save the scaler and columns
     with open(scaler_path, 'wb') as scaler_file:
